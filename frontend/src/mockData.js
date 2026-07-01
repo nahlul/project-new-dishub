@@ -220,23 +220,35 @@ export const news = [
     excerpt: "BANDA ACEH – Bus Trans Koetaradja kembali beroperasi melayani mobilitas masyarakat di wilayah Banda Aceh dan Aceh Besar. Pengoperasian 14 rute akan dilakukan secara bertahap, 3 di antaranya merupakan rute baru.",
     date: "24 Februari 2025",
     image: "https://dishub.acehprov.go.id/wp-content/uploads/2025/02/WhatsApp-Image-2025-02-24-at-20.39.53.jpeg",
-    category: "Pengumuman"
+    category: "Pengumuman",
+    link: "https://dishub.acehprov.go.id/2025/02/24/bus-trans-koetaradja-kembali-beroperasi-layani-14-rute/"
   },
   {
     id: 2,
-    title: "3 Rute Baru Trans Koetaradja di Tahun 2025",
-    excerpt: "Pada tahun 2025 ini, Trans Koetaradja menambah 3 rute layanan baru sehingga dapat menjangkau masyarakat yang lebih luas. Rute baru tersebut adalah Darussalam – Pasar Lam Ateuk, Pusat Kota – Lampaseh – Lambung, dan Keudah – Pasar Al Mahirah.",
-    date: "24 Februari 2025",
-    image: "https://dishub.acehprov.go.id/wp-content/uploads/2025/02/WhatsApp-Image-2025-02-24-at-20.39.53-1-300x200.jpeg",
-    category: "Berita"
+    title: "Plt Kadishub Aceh Besar Hadiri Launching Rute Baru Trans Koetaradja Simpang Mesra – Kajhu",
+    excerpt: "Pelaksana Tugas (Plt) Kepala Dinas Perhubungan Kabupaten Aceh Besar, Dodi Trisna SSTP MSi, menghadiri acara launching rute baru Trans Koetaradja trayek Simpang Mesra – Kajhu di Depo Trans Koetaradja, Batoh, Banda Aceh.",
+    date: "17 September 2025",
+    image: "https://acehbesarkab.go.id/thumbnail/700x0/media/2025.09/whatsapp_image_2025-09-17_at_35530_pm1.jpeg",
+    category: "Berita",
+    link: "https://acehbesarkab.go.id/berita/kategori/pemerintahan/plt-kadishub-aceh-besar-hadiri-launching-rute-baru-trans-koetaradja-simpang-mesra-kajhu"
   },
   {
     id: 3,
-    title: "Trans Koetaradja Tetap Beroperasi di Bulan Ramadan",
-    excerpt: "Pada bulan Ramadan yang segera tiba, layanan Trans Koetaradja akan tetap beroperasi secara reguler sehingga dapat digunakan oleh masyarakat untuk mendukung aktivitas di bulan yang sakral.",
-    date: "24 Februari 2025",
-    image: "https://dishub.acehprov.go.id/wp-content/uploads/2025/02/WhatsApp-Image-2025-02-24-at-20.39.53.jpeg",
-    category: "Informasi"
+    title: "Dishub Aceh Luncurkan TransCampus dan 7 Armada Bus Baru Trans Koetaradja",
+    excerpt: "Dinas Perhubungan Aceh telah meluncurkan program TransCampus dan tujuh armada bus baru Trans Koetaradja. Penyediaan angkutan feeder di kawasan kampus USK dan UIN Ar-Raniry diharapkan dapat menunjang seluruh kegiatan sivitas akademika kampus.",
+    date: "19 Januari 2023",
+    image: "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,f_auto,q_auto:best,w_640/v1634025439/01gq4kage3c0x0m8yzdmav30tn.jpg",
+    category: "Informasi",
+    link: "https://m.kumparan.com/acehkini/dishub-aceh-luncurkan-transcampus-dan-7-armada-bus-baru-trans-koetaradja-1zfTcZteHh9"
+  },
+  {
+    id: 4,
+    title: "Masyarakat Butuh Feeder Trans Koetaradja",
+    excerpt: "Tasya Rahmayanti, mahasiswi UIN Ar-Raniry mengharapkan adanya Feeder agar memudahkan masyarakat yang ingin menggunakan Trans Koetaradja. Feeder adalah kendaraan pengumpul yang dapat menjangkau kawasan perumahan dan mengantar penumpang ke halte terdekat.",
+    date: "29 November 2019",
+    image: "https://dishub.acehprov.go.id/wp-content/uploads/2019/11/Bus-Trans-K-scaled-1.jpg",
+    category: "Berita",
+    link: "https://dishub.acehprov.go.id/2019/11/29/masyarakat-butuh-feeder-trans-koetaradja/"
   }
 ];
 
@@ -279,19 +291,37 @@ export const gallery = [
   {
     id: 1,
     image: "https://dishub.acehprov.go.id/wp-content/uploads/2025/02/WhatsApp-Image-2025-02-24-at-20.39.53.jpeg",
-    title: "Bus Trans Koetaradja",
+    title: "Armada Bus Trans Koetaradja",
     category: "Bus"
   },
   {
     id: 2,
-    image: "https://dishub.acehprov.go.id/wp-content/uploads/2025/02/WhatsApp-Image-2025-02-24-at-20.39.53-1-300x200.jpeg",
-    title: "Layanan Trans Koetaradja",
+    image: "https://acehbesarkab.go.id/thumbnail/700x0/media/2025.09/whatsapp_image_2025-09-17_at_35530_pm1.jpeg",
+    title: "Launching Rute Baru Simpang Mesra - Kajhu",
     category: "Operasional"
   },
   {
     id: 3,
-    image: "https://transkutaraja.acehprov.go.id/etaUI/transK.png",
-    title: "Bus Trans Koetaradja di Halte",
+    image: "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,f_auto,q_auto:best,w_640/v1634025439/01gq4kage3c0x0m8yzdmav30tn.jpg",
+    title: "TransCampus di Kampus USK",
+    category: "TransCampus"
+  },
+  {
+    id: 4,
+    image: "https://dishub.acehprov.go.id/wp-content/uploads/2019/11/Bus-Trans-K-scaled-1.jpg",
+    title: "Bus Trans Koetaradja Melayani Masyarakat",
+    category: "Pelayanan"
+  },
+  {
+    id: 5,
+    image: "https://ik.imagekit.io/tvlk/blog/2025/03/trans-koetaradja-banda-aceh-1.jpeg",
+    title: "Bus Baru Trans Koetaradja",
+    category: "Armada"
+  },
+  {
+    id: 6,
+    image: "https://s3-ap-southeast-1.amazonaws.com/cntatr-assets-ap-southeast-1-250226768838-55a62c9399d4d8a6/2025/03/trans-koetaradja-banda-aceh-2-1024x683.jpg",
+    title: "Halte Trans Koetaradja",
     category: "Halte"
   }
 ];

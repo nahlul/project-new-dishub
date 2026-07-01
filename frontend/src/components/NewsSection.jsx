@@ -14,7 +14,7 @@ const NewsSection = () => {
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
             Berita & Pengumuman
           </h2>
-          <div className="w-24 h-1 bg-emerald-600 mx-auto mb-6" />
+          <div className="w-24 h-1 bg-sky-600 mx-auto mb-6" />
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             Update terbaru seputar layanan Trans Koetaradja
           </p>
@@ -23,7 +23,7 @@ const NewsSection = () => {
         {/* News Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {news.map((item) => (
-            <Card key={item.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 group hover:scale-105 border-2 hover:border-emerald-500">
+            <Card key={item.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 group hover:scale-105 border-2 hover:border-sky-500">
               <div className="relative overflow-hidden h-48">
                 <img
                   src={item.image}
@@ -31,7 +31,7 @@ const NewsSection = () => {
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
                 <div className="absolute top-4 left-4">
-                  <Badge className="bg-emerald-600 text-white">
+                  <Badge className="bg-sky-600 text-white">
                     {item.category}
                   </Badge>
                 </div>
@@ -42,7 +42,7 @@ const NewsSection = () => {
                   <Calendar className="w-4 h-4" />
                   <span>{item.date}</span>
                 </div>
-                <CardTitle className="text-xl font-bold line-clamp-2 group-hover:text-emerald-600 transition-colors">
+                <CardTitle className="text-xl font-bold line-clamp-2 group-hover:text-sky-600 transition-colors">
                   {item.title}
                 </CardTitle>
               </CardHeader>
@@ -54,13 +54,15 @@ const NewsSection = () => {
               </CardContent>
               
               <CardFooter>
-                <Button 
-                  variant="ghost" 
-                  className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 p-0 h-auto font-semibold"
+                <a 
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sky-600 hover:text-sky-700 hover:bg-sky-50 p-0 h-auto font-semibold inline-flex items-center transition-colors"
                 >
                   Baca Selengkapnya
                   <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+                </a>
               </CardFooter>
             </Card>
           ))}
@@ -70,7 +72,7 @@ const NewsSection = () => {
         <div className="text-center mt-12">
           <Button 
             variant="outline"
-            className="border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white px-8 py-6 rounded-xl font-semibold text-lg transition-all duration-300"
+            className="border-2 border-sky-600 text-sky-600 hover:bg-sky-600 hover:text-white px-8 py-6 rounded-xl font-semibold text-lg transition-all duration-300"
           >
             Lihat Semua Berita
             <ArrowRight className="ml-2 h-5 w-5" />

@@ -6,8 +6,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 
 const RoutesSection = () => {
-  const [selectedType, setSelectedType] = useState('all');
-
   const getRoutesByType = (type) => {
     if (type === 'all') return routes;
     return routes.filter(route => route.type === type);
@@ -18,7 +16,7 @@ const RoutesSection = () => {
       case 'koridor': return 'bg-blue-100 text-blue-700';
       case 'feeder': return 'bg-purple-100 text-purple-700';
       case 'campus': return 'bg-orange-100 text-orange-700';
-      case 'new': return 'bg-emerald-100 text-emerald-700';
+      case 'new': return 'bg-sky-100 text-sky-700';
       default: return 'bg-gray-100 text-gray-700';
     }
   };
@@ -41,7 +39,7 @@ const RoutesSection = () => {
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
             Rute & Koridor
           </h2>
-          <div className="w-24 h-1 bg-emerald-600 mx-auto mb-6" />
+          <div className="w-24 h-1 bg-sky-600 mx-auto mb-6" />
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             Trans Koetaradja melayani 14 rute di wilayah Banda Aceh dan Aceh Besar, termasuk 3 rute baru di tahun 2025
           </p>
@@ -82,12 +80,12 @@ const RouteGrid = ({ routes, getTypeBadgeColor, getTypeLabel }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {routes.map((route) => (
-        <Card key={route.id} className="hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 hover:border-emerald-500">
+        <Card key={route.id} className="hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 hover:border-sky-500">
           <CardHeader>
             <div className="flex items-start justify-between mb-2">
               <div className="flex items-center space-x-2">
-                <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
-                  <Route className="w-5 h-5 text-emerald-600" />
+                <div className="w-10 h-10 bg-sky-100 rounded-full flex items-center justify-center">
+                  <Route className="w-5 h-5 text-sky-600" />
                 </div>
                 <CardTitle className="text-xl">{route.name}</CardTitle>
               </div>
@@ -101,7 +99,7 @@ const RouteGrid = ({ routes, getTypeBadgeColor, getTypeLabel }) => {
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-start space-x-3 text-sm">
-              <MapPin className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+              <MapPin className="w-4 h-4 text-sky-600 flex-shrink-0 mt-0.5" />
               <div>
                 <p className="text-gray-600"><span className="font-semibold">Dari:</span> {route.from}</p>
                 <p className="text-gray-600"><span className="font-semibold">Ke:</span> {route.to}</p>
@@ -109,12 +107,12 @@ const RouteGrid = ({ routes, getTypeBadgeColor, getTypeLabel }) => {
             </div>
             
             <div className="flex items-center space-x-3 text-sm">
-              <Clock className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+              <Clock className="w-4 h-4 text-sky-600 flex-shrink-0" />
               <p className="text-gray-600"><span className="font-semibold">Operasional:</span> {route.operational}</p>
             </div>
             
             <div className="flex items-center space-x-3 text-sm">
-              <Navigation className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+              <Navigation className="w-4 h-4 text-sky-600 flex-shrink-0" />
               <p className="text-gray-600"><span className="font-semibold">Jarak:</span> {route.distance} <span className="mx-2">•</span> <span className="font-semibold">Durasi:</span> ±{route.duration}</p>
             </div>
           </CardContent>

@@ -24,30 +24,30 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-bold text-lg mb-4 text-emerald-400">Menu Cepat</h3>
+            <h3 className="font-bold text-lg mb-4 text-sky-400">Menu Cepat</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#about" className="text-gray-300 hover:text-emerald-400 transition-colors duration-200 text-sm">
+                <a href="#about" className="text-gray-300 hover:text-sky-400 transition-colors duration-200 text-sm">
                   Tentang Kami
                 </a>
               </li>
               <li>
-                <a href="#routes" className="text-gray-300 hover:text-emerald-400 transition-colors duration-200 text-sm">
+                <a href="#routes" className="text-gray-300 hover:text-sky-400 transition-colors duration-200 text-sm">
                   Rute & Koridor
                 </a>
               </li>
               <li>
-                <a href="#facilities" className="text-gray-300 hover:text-emerald-400 transition-colors duration-200 text-sm">
+                <a href="#facilities" className="text-gray-300 hover:text-sky-400 transition-colors duration-200 text-sm">
                   Fasilitas
                 </a>
               </li>
               <li>
-                <a href="#news" className="text-gray-300 hover:text-emerald-400 transition-colors duration-200 text-sm">
+                <a href="#news" className="text-gray-300 hover:text-sky-400 transition-colors duration-200 text-sm">
                   Berita
                 </a>
               </li>
               <li>
-                <a href="#faq" className="text-gray-300 hover:text-emerald-400 transition-colors duration-200 text-sm">
+                <a href="#faq" className="text-gray-300 hover:text-sky-400 transition-colors duration-200 text-sm">
                   FAQ
                 </a>
               </li>
@@ -56,21 +56,21 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className="font-bold text-lg mb-4 text-emerald-400">Kontak Kami</h3>
+            <h3 className="font-bold text-lg mb-4 text-sky-400">Kontak Kami</h3>
             <ul className="space-y-3">
               <li className="flex items-start space-x-3">
-                <MapPin className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                <MapPin className="w-5 h-5 text-sky-400 flex-shrink-0 mt-0.5" />
                 <span className="text-gray-300 text-sm">
                   Dinas Perhubungan Aceh<br />
                   Jl. T. Panglima Nyak Makam No.16, Banda Aceh
                 </span>
               </li>
               <li className="flex items-center space-x-3">
-                <Phone className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                <Phone className="w-5 h-5 text-sky-400 flex-shrink-0" />
                 <span className="text-gray-300 text-sm">+62 651 7551234</span>
               </li>
               <li className="flex items-center space-x-3">
-                <Mail className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                <Mail className="w-5 h-5 text-sky-400 flex-shrink-0" />
                 <span className="text-gray-300 text-sm">info@transkutaraja.acehprov.go.id</span>
               </li>
             </ul>
@@ -78,26 +78,26 @@ const Footer = () => {
 
           {/* Social Media */}
           <div>
-            <h3 className="font-bold text-lg mb-4 text-emerald-400">Ikuti Kami</h3>
+            <h3 className="font-bold text-lg mb-4 text-sky-400">Ikuti Kami</h3>
             <p className="text-gray-300 text-sm mb-4">
               Dapatkan update terbaru tentang layanan Trans Koetaradja
             </p>
             <div className="flex space-x-4">
               <a
                 href="#"
-                className="w-10 h-10 bg-gray-700 hover:bg-emerald-600 rounded-full flex items-center justify-center transition-colors duration-200"
+                className="w-10 h-10 bg-gray-700 hover:bg-sky-600 rounded-full flex items-center justify-center transition-colors duration-200"
               >
                 <Facebook className="w-5 h-5" />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 bg-gray-700 hover:bg-emerald-600 rounded-full flex items-center justify-center transition-colors duration-200"
+                className="w-10 h-10 bg-gray-700 hover:bg-sky-600 rounded-full flex items-center justify-center transition-colors duration-200"
               >
                 <Instagram className="w-5 h-5" />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 bg-gray-700 hover:bg-emerald-600 rounded-full flex items-center justify-center transition-colors duration-200"
+                className="w-10 h-10 bg-gray-700 hover:bg-sky-600 rounded-full flex items-center justify-center transition-colors duration-200"
               >
                 <Twitter className="w-5 h-5" />
               </a>

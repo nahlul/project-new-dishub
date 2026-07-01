@@ -36,17 +36,17 @@ const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md py-2' : 'bg-white/95 backdrop-blur-sm py-4'
+        isScrolled ? 'bg-white shadow-md py-3' : 'bg-white/95 backdrop-blur-sm py-4'
       }`}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
+          {/* Logo - diperbesar */}
           <a href="#home" className="flex items-center space-x-3" onClick={(e) => scrollToSection(e, '#home')}>
             <img
               src="https://customer-assets.emergentagent.com/job_kutaradja-app-center/artifacts/oicumat1_unnamed.png"
               alt="Trans Koetaradja Logo"
-              className="h-12 w-auto"
+              className="h-16 w-auto"
             />
           </a>
 
@@ -57,7 +57,7 @@ const Header = () => {
                 key={item.label}
                 href={item.href}
                 onClick={(e) => scrollToSection(e, item.href)}
-                className="px-4 py-2 text-gray-700 hover:text-emerald-600 font-medium transition-colors duration-200 rounded-lg hover:bg-emerald-50"
+                className="px-4 py-2 text-gray-700 hover:text-sky-600 font-medium transition-colors duration-200 rounded-lg hover:bg-sky-50"
               >
                 {item.label}
               </a>
@@ -68,7 +68,7 @@ const Header = () => {
           <div className="hidden md:block">
             <Button
               onClick={(e) => scrollToSection(e, '#download')}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-200 shadow-md hover:shadow-lg"
+              className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-200 shadow-md hover:shadow-lg"
             >
               Download App
             </Button>
@@ -77,7 +77,7 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 text-gray-700 hover:text-emerald-600 transition-colors"
+            className="md:hidden p-2 text-gray-700 hover:text-sky-600 transition-colors"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -91,7 +91,7 @@ const Header = () => {
                 key={item.label}
                 href={item.href}
                 onClick={(e) => scrollToSection(e, item.href)}
-                className="block px-4 py-3 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 font-medium transition-colors duration-200 rounded-lg"
+                className="block px-4 py-3 text-gray-700 hover:text-sky-600 hover:bg-sky-50 font-medium transition-colors duration-200 rounded-lg"
               >
                 {item.label}
               </a>
@@ -99,7 +99,7 @@ const Header = () => {
             <div className="mt-4 px-4">
               <Button
                 onClick={(e) => scrollToSection(e, '#download')}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg font-semibold transition-all duration-200 shadow-md"
+                className="w-full bg-sky-600 hover:bg-sky-700 text-white py-3 rounded-lg font-semibold transition-all duration-200 shadow-md"
               >
                 Download App
               </Button>

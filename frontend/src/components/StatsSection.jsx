@@ -3,7 +3,7 @@ import { stats } from '../mockData';
 
 const StatsSection = () => {
   return (
-    <section className="py-20 bg-gradient-to-br from-emerald-600 via-emerald-700 to-green-700 text-white relative overflow-hidden">
+    <section className="py-20 bg-gradient-to-br from-sky-600 via-sky-700 to-blue-700 text-white relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full mix-blend-overlay filter blur-3xl" />
@@ -15,7 +15,7 @@ const StatsSection = () => {
           <h2 className="text-3xl lg:text-4xl font-bold mb-4">
             Trans Koetaradja dalam Angka
           </h2>
-          <p className="text-emerald-100 text-lg">
+          <p className="text-sky-100 text-lg">
             Komitmen kami melayani masyarakat Aceh
           </p>
         </div>
@@ -29,10 +29,10 @@ const StatsSection = () => {
               <div className="text-5xl lg:text-6xl font-bold mb-3 text-white">
                 {stat.value}
               </div>
-              <div className="text-xl font-semibold mb-2 text-emerald-50">
+              <div className="text-xl font-semibold mb-2 text-sky-50">
                 {stat.label}
               </div>
-              <div className="text-sm text-emerald-100">
+              <div className="text-sm text-sky-100">
                 {stat.description}
               </div>
             </div>
