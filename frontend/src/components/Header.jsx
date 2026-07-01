@@ -41,13 +41,26 @@ const Header = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          {/* Logo - diperbesar */}
-          <a href="#home" className="flex items-center space-x-3" onClick={(e) => scrollToSection(e, '#home')}>
-            <img
-              src="https://customer-assets.emergentagent.com/job_kutaradja-app-center/artifacts/oicumat1_unnamed.png"
-              alt="Trans Koetaradja Logo"
-              className="h-16 w-auto"
-            />
+          {/* Logo dengan text Trans Koetaradja */}
+          <a href="#home" className="flex items-center space-x-2" onClick={(e) => scrollToSection(e, '#home')}>
+            <div className="flex items-center space-x-3">
+              {/* Icon Bus/Unta placeholder dengan style Trans Koetaradja */}
+              <div className="relative">
+                <svg className="h-14 w-14" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  {/* Unta stylized */}
+                  <path d="M70 30 C75 25, 80 25, 85 30 L85 45 C85 50, 80 55, 75 55 L70 55 Z" fill="#F59E0B" />
+                  <path d="M40 35 C45 30, 50 30, 55 35 L55 50 C55 55, 50 60, 45 60 L40 60 Z" fill="#F59E0B" />
+                  <path d="M25 45 L75 45 L75 75 C75 80, 70 85, 65 85 L35 85 C30 85, 25 80, 25 75 Z" fill="#F59E0B" />
+                  <circle cx="35" cy="70" r="8" fill="#1E40AF" />
+                  <circle cx="65" cy="70" r="8" fill="#1E40AF" />
+                  <rect x="30" y="50" width="40" height="15" rx="2" fill="white" opacity="0.3" />
+                </svg>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-2xl font-bold text-gray-900 leading-tight">Trans</span>
+                <span className="text-xl font-bold text-sky-700 leading-tight">Koetaradja</span>
+              </div>
+            </div>
           </a>
 
           {/* Desktop Navigation */}
