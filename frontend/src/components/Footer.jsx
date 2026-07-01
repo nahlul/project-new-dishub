@@ -64,11 +64,23 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-sky-400 flex-shrink-0" />
-                <span className="text-gray-300 text-sm">+62 811 6712349</span>
+                <a 
+                  href="https://wa.me/628116712349"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 text-sm hover:text-sky-400 transition-colors"
+                >
+                  +62 811 6712349
+                </a>
               </li>
               <li className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-sky-400 flex-shrink-0" />
-                <span className="text-gray-300 text-sm">info@transkutaraja.acehprov.go.id</span>
+                <a 
+                  href="mailto:info@transkutaraja.acehprov.go.id?subject=Pertanyaan tentang Trans Koetaradja&body=Halo Tim Trans Koetaradja,%0D%0A%0D%0A"
+                  className="text-gray-300 text-sm hover:text-sky-400 transition-colors"
+                >
+                  info@transkutaraja.acehprov.go.id
+                </a>
               </li>
             </ul>
           </div>

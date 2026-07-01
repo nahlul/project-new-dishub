@@ -25,6 +25,7 @@ const Header = () => {
     { label: 'Galeri', path: '/galeri' },
     { label: 'Berita', path: '/berita' },
     { label: 'FAQ', path: '/faq' },
+    { label: 'Hubungi', path: 'https://wa.me/628116712349', external: true },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -62,24 +63,36 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-1">
             {menuItems.map((item) => (
-              <Link
-                key={item.label}
-                to={item.path}
-                className={`px-4 py-2 font-medium transition-all duration-200 rounded-lg relative group ${
-                  isActive(item.path)
-                    ? 'text-sky-600 bg-sky-50'
-                    : 'text-gray-700 hover:text-sky-600 hover:bg-sky-50'
-                }`}
-              >
-                {item.label}
-                {isActive(item.path) && (
-                  <motion.div
-                    layoutId="activeTab"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-sky-600"
-                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                  />
-                )}
-              </Link>
+              item.external ? (
+                <a
+                  key={item.label}
+                  href={item.path}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 font-medium transition-all duration-200 rounded-lg text-gray-700 hover:text-sky-600 hover:bg-sky-50"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  key={item.label}
+                  to={item.path}
+                  className={`px-4 py-2 font-medium transition-all duration-200 rounded-lg relative group ${
+                    isActive(item.path)
+                      ? 'text-sky-600 bg-sky-50'
+                      : 'text-gray-700 hover:text-sky-600 hover:bg-sky-50'
+                  }`}
+                >
+                  {item.label}
+                  {isActive(item.path) && (
+                    <motion.div
+                      layoutId="activeTab"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-sky-600"
+                      transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                    />
+                  )}
+                </Link>
+              )
             ))}
           </nav>
 
@@ -118,18 +131,31 @@ const Header = () => {
             >
               <div className="mt-4 pb-4 border-t border-gray-200 pt-4 space-y-2">
                 {menuItems.map((item) => (
-                  <Link
-                    key={item.label}
-                    to={item.path}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={`block px-4 py-3 font-medium transition-colors duration-200 rounded-lg ${
-                      isActive(item.path)
-                        ? 'text-sky-600 bg-sky-50'
-                        : 'text-gray-700 hover:text-sky-600 hover:bg-sky-50'
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
+                  item.external ? (
+                    <a
+                      key={item.label}
+                      href={item.path}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="block px-4 py-3 font-medium transition-colors duration-200 rounded-lg text-gray-700 hover:text-sky-600 hover:bg-sky-50"
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <Link
+                      key={item.label}
+                      to={item.path}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`block px-4 py-3 font-medium transition-colors duration-200 rounded-lg ${
+                        isActive(item.path)
+                          ? 'text-sky-600 bg-sky-50'
+                          : 'text-gray-700 hover:text-sky-600 hover:bg-sky-50'
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  )
                 ))}
                 <div className="px-4 pt-2">
                   <Link to="/download" onClick={() => setIsMobileMenuOpen(false)}>
