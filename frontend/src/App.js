@@ -13,6 +13,7 @@ import FacilitiesPage from "@/pages/FacilitiesPage";
 import GalleryPage from "@/pages/GalleryPage";
 import NewsPage from "@/pages/NewsPage";
 import FAQPage from "@/pages/FAQPage";
+import DownloadPage from "@/pages/DownloadPage";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/galeri" element={<GalleryPage />} />
             <Route path="/berita" element={<NewsPage />} />
             <Route path="/faq" element={<FAQPage />} />
+            <Route path="/download" element={<DownloadPage />} />
           </Routes>
         </main>
         <Footer />

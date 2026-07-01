@@ -40,7 +40,7 @@ const Header = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          {/* Logo - Motif Batik Biru */}
+          {/* Logo - Motif Batik Biru yang Baru */}
           <Link to="/" className="flex items-center space-x-3 group">
             <motion.div
               whileHover={{ scale: 1.05 }}
@@ -48,7 +48,7 @@ const Header = () => {
               className="relative"
             >
               <img
-                src="https://customer-assets.emergentagent.com/job_kutaradja-app-center/artifacts/fgi91ejq_image.png"
+                src="https://customer-assets.emergentagent.com/job_kutaradja-app-center/artifacts/6z3d8lef_Cuplikan_layar_2026-07-01_152844-removebg-preview.png"
                 alt="Trans Koetaradja Logo"
                 className="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
               />
@@ -85,7 +85,7 @@ const Header = () => {
 
           {/* CTA Button Desktop */}
           <div className="hidden lg:block">
-            <Link to="/faq">
+            <Link to="/download">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -132,7 +132,7 @@ const Header = () => {
                   </Link>
                 ))}
                 <div className="px-4 pt-2">
-                  <Link to="/faq" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Link to="/download" onClick={() => setIsMobileMenuOpen(false)}>
                     <Button className="w-full bg-gradient-to-r from-sky-600 to-blue-600 text-white py-3 rounded-lg font-semibold">
                       Download App
                     </Button>

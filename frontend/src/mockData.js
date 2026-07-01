@@ -284,6 +284,34 @@ export const faqs = [
   {
     question: "Bagaimana cara mengetahui jadwal bus?",
     answer: "Anda dapat melihat jadwal bus melalui aplikasi Trans Koetaradja atau mengunjungi website ini untuk informasi lengkap semua rute."
+  },
+  {
+    question: "Apakah ada batasan usia untuk menggunakan Trans Koetaradja?",
+    answer: "Tidak ada batasan usia. Trans Koetaradja terbuka untuk semua kalangan mulai dari anak-anak hingga lansia. Kami menyediakan fasilitas khusus untuk penyandang disabilitas dan lansia."
+  },
+  {
+    question: "Apakah bisa membawa barang bawaan di dalam bus?",
+    answer: "Ya, penumpang diperbolehkan membawa barang bawaan yang wajar dan tidak mengganggu kenyamanan penumpang lain. Barang berbahaya dan hewan peliharaan tidak diperkenankan."
+  },
+  {
+    question: "Bagaimana jika ada keluhan atau saran?",
+    answer: "Anda dapat menghubungi kami melalui telepon di +62 811 6712349 atau email ke info@transkutaraja.acehprov.go.id. Kami juga menerima keluhan dan saran melalui aplikasi mobile."
+  },
+  {
+    question: "Apakah Trans Koetaradja melayani rute ke bandara?",
+    answer: "Ya, Trans Koetaradja melayani rute ke Bandara Sultan Iskandar Muda (SIM) melalui Koridor 2A: Mesjid Raya - Bandara SIM."
+  },
+  {
+    question: "Berapa lama waktu tunggu antar bus?",
+    answer: "Frekuensi kedatangan bus bervariasi tergantung rute, umumnya setiap 15-30 menit. Anda dapat melihat waktu tunggu real-time melalui aplikasi."
+  },
+  {
+    question: "Apakah ada layanan khusus untuk mahasiswa?",
+    answer: "Ya, kami memiliki layanan Trans Kampus yang khusus melayani area kampus USK dan UIN Ar-Raniry untuk memudahkan mobilitas sivitas akademika."
+  },
+  {
+    question: "Bagaimana cara melaporkan barang hilang?",
+    answer: "Jika Anda kehilangan barang di bus, segera hubungi call center kami di +62 811 6712349 atau laporkan melalui aplikasi Trans Koetaradja. Berikan detail seperti nomor bus, waktu, dan deskripsi barang."
   }
 ];
 

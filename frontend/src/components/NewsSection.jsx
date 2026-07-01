@@ -68,15 +68,22 @@ const NewsSection = () => {
           ))}
         </div>
 
-        {/* View All Button */}
+        {/* View All Button - Link ke Instagram */}
         <div className="text-center mt-12">
-          <Button 
-            variant="outline"
-            className="border-2 border-sky-600 text-sky-600 hover:bg-sky-600 hover:text-white px-8 py-6 rounded-xl font-semibold text-lg transition-all duration-300"
+          <a
+            href="https://www.instagram.com/trans.koetaradja"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Lihat Semua Berita
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
+            <Button 
+              variant="outline"
+              className="border-2 border-sky-600 text-sky-600 hover:bg-sky-600 hover:text-white px-8 py-6 rounded-xl font-semibold text-lg transition-all duration-300"
+            >
+              Ketuk untuk Mendapatkan Berita Terbaru
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </a>
+          <p className="text-gray-500 text-sm mt-4">Follow @trans.koetaradja di Instagram</p>
         </div>
       </div>
     </section>
