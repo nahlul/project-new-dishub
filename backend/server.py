@@ -10,6 +10,9 @@ from typing import List
 import uuid
 from datetime import datetime, timezone
 
+# Import chat routes
+from chat_routes import router as chat_router
+
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -68,6 +71,9 @@ async def get_status_checks():
 
 # Include the router in the main app
 app.include_router(api_router)
+
+# Include chat router
+app.include_router(chat_router, prefix="/api", tags=["chat"])
 
 app.add_middleware(
     CORSMiddleware,
