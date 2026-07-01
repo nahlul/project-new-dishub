@@ -7,7 +7,7 @@ import { Button } from './ui/button';
 
 const NewsSection = () => {
   return (
-    <section  className="py-20 bg-white">
+    <section className="py-20 bg-white overflow-x-hidden">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-12">
@@ -20,48 +20,48 @@ const NewsSection = () => {
           </p>
         </div>
 
-        {/* News Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        {/* News Grid - Fixed untuk mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
           {news.map((item) => (
-            <Card key={item.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 group hover:scale-105 border-2 hover:border-sky-500">
-              <div className="relative overflow-hidden h-48">
+            <Card key={item.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 group hover:scale-105 border-2 hover:border-sky-500 flex flex-col h-full">
+              <div className="relative overflow-hidden h-48 flex-shrink-0">
                 <img
                   src={item.image}
                   alt={item.title}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
                 <div className="absolute top-4 left-4">
-                  <Badge className="bg-sky-600 text-white">
+                  <Badge className="bg-sky-600 text-white text-xs">
                     {item.category}
                   </Badge>
                 </div>
               </div>
               
-              <CardHeader>
-                <div className="flex items-center space-x-2 text-sm text-gray-500 mb-2">
-                  <Calendar className="w-4 h-4" />
-                  <span>{item.date}</span>
+              <CardHeader className="flex-grow pb-2">
+                <div className="flex items-center space-x-2 text-xs text-gray-500 mb-2">
+                  <Calendar className="w-3 h-3 flex-shrink-0" />
+                  <span className="truncate">{item.date}</span>
                 </div>
-                <CardTitle className="text-xl font-bold line-clamp-2 group-hover:text-sky-600 transition-colors">
+                <CardTitle className="text-base lg:text-xl font-bold line-clamp-2 group-hover:text-sky-600 transition-colors leading-tight">
                   {item.title}
                 </CardTitle>
               </CardHeader>
               
-              <CardContent>
-                <CardDescription className="text-gray-600 line-clamp-3 leading-relaxed">
+              <CardContent className="flex-grow py-2">
+                <CardDescription className="text-sm text-gray-600 line-clamp-3 leading-relaxed">
                   {item.excerpt}
                 </CardDescription>
               </CardContent>
               
-              <CardFooter>
+              <CardFooter className="pt-2">
                 <a 
                   href={item.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sky-600 hover:text-sky-700 hover:bg-sky-50 p-0 h-auto font-semibold inline-flex items-center transition-colors"
+                  className="text-sky-600 hover:text-sky-700 hover:bg-sky-50 p-0 h-auto font-semibold inline-flex items-center transition-colors text-sm"
                 >
                   Baca Selengkapnya
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className="ml-2 h-3 w-3 lg:h-4 lg:w-4 flex-shrink-0" />
                 </a>
               </CardFooter>
             </Card>
@@ -77,13 +77,13 @@ const NewsSection = () => {
           >
             <Button 
               variant="outline"
-              className="border-2 border-sky-600 text-sky-600 hover:bg-sky-600 hover:text-white px-8 py-6 rounded-xl font-semibold text-lg transition-all duration-300"
+              className="border-2 border-sky-600 text-sky-600 hover:bg-sky-600 hover:text-white px-6 lg:px-8 py-4 lg:py-6 rounded-xl font-semibold text-base lg:text-lg transition-all duration-300"
             >
               Ketuk untuk Mendapatkan Berita Terbaru
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <ArrowRight className="ml-2 h-4 w-4 lg:h-5 lg:w-5" />
             </Button>
           </a>
-          <p className="text-gray-500 text-sm mt-4">Follow @trans.koetaradja di Instagram</p>
+          <p className="text-gray-500 text-xs lg:text-sm mt-4">Follow @trans.koetaradja di Instagram</p>
         </div>
       </div>
     </section>
