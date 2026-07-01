@@ -3,6 +3,7 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 from typing import List
 from datetime import datetime, timezone
 import logging
+import os
 
 from models.schemas import Gallery, GalleryCreate
 from utils.auth_utils import get_current_user
