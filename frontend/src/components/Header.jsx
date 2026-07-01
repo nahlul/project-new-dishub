@@ -21,10 +21,10 @@ const Header = () => {
     { label: 'Beranda', path: '/' },
     { label: 'Tentang', path: '/tentang' },
     { label: 'Rute', path: '/rute' },
-    { label: 'Layanan', path: '/layanan' },
+    { label: 'Fasilitas', path: '/fasilitas' },
     { label: 'Galeri', path: '/galeri' },
     { label: 'Berita', path: '/berita' },
-    { label: 'Hubungi', path: '/hubungi' },
+    { label: 'FAQ', path: '/faq' },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -38,29 +38,29 @@ const Header = () => {
         isScrolled ? 'bg-white shadow-lg py-2' : 'bg-white/95 backdrop-blur-md py-4'
       }`}
     >
-      <div className=\"container mx-auto px-4\">
-        <div className=\"flex items-center justify-between\">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between">
           {/* Logo - Motif Batik Biru */}
-          <Link to=\"/\" className=\"flex items-center space-x-3 group\">
+          <Link to="/" className="flex items-center space-x-3 group">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className=\"relative\"
+              className="relative"
             >
               <img
-                src=\"https://customer-assets.emergentagent.com/job_kutaradja-app-center/artifacts/fgi91ejq_image.png\"
-                alt=\"Trans Koetaradja Logo\"
-                className=\"h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105\"
+                src="https://customer-assets.emergentagent.com/job_kutaradja-app-center/artifacts/fgi91ejq_image.png"
+                alt="Trans Koetaradja Logo"
+                className="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
               />
             </motion.div>
-            <div className=\"flex flex-col\">
-              <span className=\"text-2xl font-bold text-gray-900 leading-tight\">Trans</span>
-              <span className=\"text-xl font-bold text-sky-700 leading-tight\">Koetaradja</span>
+            <div className="flex flex-col">
+              <span className="text-2xl font-bold text-gray-900 leading-tight">Trans</span>
+              <span className="text-xl font-bold text-sky-700 leading-tight">Koetaradja</span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className=\"hidden lg:flex items-center space-x-1\">
+          <nav className="hidden lg:flex items-center space-x-1">
             {menuItems.map((item) => (
               <Link
                 key={item.label}
@@ -74,8 +74,8 @@ const Header = () => {
                 {item.label}
                 {isActive(item.path) && (
                   <motion.div
-                    layoutId=\"activeTab\"
-                    className=\"absolute bottom-0 left-0 right-0 h-0.5 bg-sky-600\"
+                    layoutId="activeTab"
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-sky-600"
                     transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                   />
                 )}
@@ -84,13 +84,13 @@ const Header = () => {
           </nav>
 
           {/* CTA Button Desktop */}
-          <div className=\"hidden lg:block\">
-            <Link to=\"/download\">
+          <div className="hidden lg:block">
+            <Link to="/faq">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button className=\"bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-200 shadow-md hover:shadow-xl\">
+                <Button className="bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-200 shadow-md hover:shadow-xl">
                   Download App
                 </Button>
               </motion.div>
@@ -100,7 +100,7 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className=\"lg:hidden p-2 text-gray-700 hover:text-sky-600 transition-colors\"
+            className="lg:hidden p-2 text-gray-700 hover:text-sky-600 transition-colors"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -114,9 +114,9 @@ const Header = () => {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className=\"lg:hidden overflow-hidden\"
+              className="lg:hidden overflow-hidden"
             >
-              <div className=\"mt-4 pb-4 border-t border-gray-200 pt-4 space-y-2\">
+              <div className="mt-4 pb-4 border-t border-gray-200 pt-4 space-y-2">
                 {menuItems.map((item) => (
                   <Link
                     key={item.label}
@@ -131,9 +131,9 @@ const Header = () => {
                     {item.label}
                   </Link>
                 ))}
-                <div className=\"px-4 pt-2\">
-                  <Link to=\"/download\" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Button className=\"w-full bg-gradient-to-r from-sky-600 to-blue-600 text-white py-3 rounded-lg font-semibold\">
+                <div className="px-4 pt-2">
+                  <Link to="/faq" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Button className="w-full bg-gradient-to-r from-sky-600 to-blue-600 text-white py-3 rounded-lg font-semibold">
                       Download App
                     </Button>
                   </Link>
