@@ -4,7 +4,11 @@ import { Button } from './ui/button';
 
 const DownloadSection = () => {
   const handleDownload = (platform) => {
-    window.open('https://play.google.com/store/apps/details?id=ngi.muchi.koetaradja&hl=id&pli=1', '_blank');
+    if (platform === 'ios') {
+      window.open('https://apps.apple.com/id/iphone/search?l=id&term=Trans%20Koetaradja', '_blank');
+    } else {
+      window.open('https://play.google.com/store/apps/details?id=ngi.muchi.koetaradja&hl=id&pli=1', '_blank');
+    }
   };
 
   return (
