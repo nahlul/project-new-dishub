@@ -3,7 +3,6 @@ import "@/App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ChatWidget from "@/components/ChatWidget";
 import { Toaster } from "@/components/ui/sonner";
 
 // Pages
@@ -34,7 +33,6 @@ function App() {
           </Routes>
         </main>
         <Footer />
-        <ChatWidget />
         <Toaster />
       </BrowserRouter>
     </div>
