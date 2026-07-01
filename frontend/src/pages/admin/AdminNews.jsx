@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import AdminLayout from '@/components/AdminLayout';
+import AdminPageHeader from '@/components/AdminPageHeader';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -133,22 +134,22 @@ const AdminNews = () => {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Kelola Berita</h1>
-            <p className="text-gray-600 mt-1">Tambah, edit, atau hapus berita</p>
-          </div>
-          <Button
-            onClick={() => {
-              resetForm();
-              setShowDialog(true);
-            }}
-            className="bg-sky-600 hover:bg-sky-700"
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            Tambah Berita
-          </Button>
-        </div>
+        <AdminPageHeader
+          title="Kelola Berita"
+          subtitle="Tambah, edit, atau hapus berita"
+          action={
+            <Button
+              onClick={() => {
+                resetForm();
+                setShowDialog(true);
+              }}
+              className="bg-sky-600 hover:bg-sky-700"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Tambah Berita
+            </Button>
+          }
+        />
 
         {loading ? (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

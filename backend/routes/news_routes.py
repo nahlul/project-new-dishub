@@ -3,6 +3,7 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 from typing import List
 from datetime import datetime, timezone
 import logging
+import os
 
 from models.schemas import News, NewsCreate, NewsUpdate
 from utils.auth_utils import get_current_user
@@ -104,9 +105,9 @@ async def upload_news_image(
         image_data = await file.read()
         upload_result = upload_image(image_data, file.filename, folder="news")
         
-        # Generate public URL
-        backend_url = request.headers.get("origin") or request.base_url
-        image_url = f"{backend_url}api/files/{upload_result['storage_path']}"
+        # Generate public URL using frontend URL from env
+        frontend_url = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
+        image_url = f"{frontend_url}/api/files/{upload_result['storage_path']}"
         
         # Update news with image info
         await db.news.update_one(

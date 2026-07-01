@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import AdminLayout from '@/components/AdminLayout';
+import AdminPageHeader from '@/components/AdminPageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -108,19 +109,19 @@ const AdminGallery = () => {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Kelola Galeri</h1>
-            <p className="text-gray-600 mt-1">Upload atau hapus foto galeri</p>
-          </div>
-          <Button
-            onClick={() => setShowUploadDialog(true)}
-            className="bg-sky-600 hover:bg-sky-700"
-          >
-            <Upload className="w-4 h-4 mr-2" />
-            Upload Foto
-          </Button>
-        </div>
+        <AdminPageHeader
+          title="Kelola Galeri"
+          subtitle="Upload atau hapus foto galeri"
+          action={
+            <Button
+              onClick={() => setShowUploadDialog(true)}
+              className="bg-sky-600 hover:bg-sky-700"
+            >
+              <Upload className="w-4 h-4 mr-2" />
+              Upload Foto
+            </Button>
+          }
+        />
 
         {loading ? (
           <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-4">

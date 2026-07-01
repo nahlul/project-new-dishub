@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AdminLayout from '@/components/AdminLayout';
+import AdminPageHeader from '@/components/AdminPageHeader';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -70,10 +71,10 @@ const AdminContact = () => {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Edit Informasi Kontak</h1>
-          <p className="text-gray-600 mt-1">Kelola informasi kontak Trans Koetaradja</p>
-        </div>
+        <AdminPageHeader
+          title="Edit Informasi Kontak"
+          subtitle="Kelola informasi kontak Trans Koetaradja"
+        />
 
         <Card className="max-w-2xl">
           <CardHeader>

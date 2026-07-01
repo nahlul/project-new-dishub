@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdminLayout from '@/components/AdminLayout';
+import AdminPageHeader from '@/components/AdminPageHeader';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -55,10 +56,10 @@ const AdminChangePassword = () => {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Ganti Password</h1>
-          <p className="text-gray-600 mt-1">Ubah username dan password admin Anda</p>
-        </div>
+        <AdminPageHeader
+          title="Ganti Password"
+          subtitle="Ubah username dan password admin Anda"
+        />
 
         <Card className="max-w-2xl">
           <CardHeader>
