@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapPin, Phone, Mail, Facebook, Instagram, Twitter } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -11,11 +12,14 @@ const Footer = () => {
           {/* About Section */}
           <div>
             <div className="flex items-center space-x-3 mb-4">
-              <img
-                src="https://customer-assets.emergentagent.com/job_kutaradja-app-center/artifacts/oicumat1_unnamed.png"
-                alt="Trans Koetaradja"
-                className="h-12 w-auto"
-              />
+              <svg className="h-12 w-12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M70 30 C75 25, 80 25, 85 30 L85 45 C85 50, 80 55, 75 55 L70 55 Z" fill="#F59E0B" />
+                <path d="M40 35 C45 30, 50 30, 55 35 L55 50 C55 55, 50 60, 45 60 L40 60 Z" fill="#F59E0B" />
+                <path d="M25 45 L75 45 L75 75 C75 80, 70 85, 65 85 L35 85 C30 85, 25 80, 25 75 Z" fill="#F59E0B" />
+                <circle cx="35" cy="70" r="8" fill="#1E40AF" />
+                <circle cx="65" cy="70" r="8" fill="#1E40AF" />
+                <rect x="30" y="50" width="40" height="15" rx="2" fill="white" opacity="0.3" />
+              </svg>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
               Transportasi publik modern yang melayani mobilitas masyarakat Kota Banda Aceh dan sekitarnya dengan gratis dan nyaman.
@@ -27,29 +31,29 @@ const Footer = () => {
             <h3 className="font-bold text-lg mb-4 text-sky-400">Menu Cepat</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#about" className="text-gray-300 hover:text-sky-400 transition-colors duration-200 text-sm">
+                <Link to="/tentang" className="text-gray-300 hover:text-sky-400 transition-colors duration-200 text-sm">
                   Tentang Kami
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#routes" className="text-gray-300 hover:text-sky-400 transition-colors duration-200 text-sm">
+                <Link to="/rute" className="text-gray-300 hover:text-sky-400 transition-colors duration-200 text-sm">
                   Rute & Koridor
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#facilities" className="text-gray-300 hover:text-sky-400 transition-colors duration-200 text-sm">
+                <Link to="/fasilitas" className="text-gray-300 hover:text-sky-400 transition-colors duration-200 text-sm">
                   Fasilitas
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#news" className="text-gray-300 hover:text-sky-400 transition-colors duration-200 text-sm">
+                <Link to="/berita" className="text-gray-300 hover:text-sky-400 transition-colors duration-200 text-sm">
                   Berita
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#faq" className="text-gray-300 hover:text-sky-400 transition-colors duration-200 text-sm">
+                <Link to="/faq" className="text-gray-300 hover:text-sky-400 transition-colors duration-200 text-sm">
                   FAQ
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

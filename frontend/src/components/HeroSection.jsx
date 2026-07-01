@@ -1,17 +1,11 @@
 import React from 'react';
 import { ArrowRight, Download, Bus, Clock, MapPin } from 'lucide-react';
 import { Button } from './ui/button';
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
-  const scrollToDownload = () => {
-    const element = document.querySelector('#download');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Background with overlay */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-sky-50 via-white to-blue-50" />
@@ -49,24 +43,23 @@ const HeroSection = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button
-                onClick={scrollToDownload}
-                className="bg-sky-600 hover:bg-sky-700 text-white px-8 py-6 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-              >
-                <Download className="mr-2 h-5 w-5" />
-                Download Aplikasi
-              </Button>
-              <Button
-                onClick={() => {
-                  const element = document.querySelector('#routes');
-                  if (element) element.scrollIntoView({ behavior: 'smooth' });
-                }}
-                variant="outline"
-                className="border-2 border-sky-600 text-sky-600 hover:bg-sky-50 px-8 py-6 rounded-xl font-bold text-lg transition-all duration-300"
-              >
-                Lihat Rute
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+              <Link to="/faq">
+                <Button
+                  className="bg-sky-600 hover:bg-sky-700 text-white px-8 py-6 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 w-full sm:w-auto"
+                >
+                  <Download className="mr-2 h-5 w-5" />
+                  Download Aplikasi
+                </Button>
+              </Link>
+              <Link to="/rute">
+                <Button
+                  variant="outline"
+                  className="border-2 border-sky-600 text-sky-600 hover:bg-sky-50 px-8 py-6 rounded-xl font-bold text-lg transition-all duration-300 w-full sm:w-auto"
+                >
+                  Lihat Rute
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
             </div>
 
             {/* Quick Features */}

@@ -14,7 +14,7 @@ const iconComponents = {
 
 const FacilitiesSection = () => {
   return (
-    <section id="facilities" className="py-20 bg-white">
+    <section  className="py-20 bg-white">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-16">
