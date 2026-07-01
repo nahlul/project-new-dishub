@@ -177,22 +177,24 @@ const AdminNews = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
               >
-                <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+                <Card className="overflow-hidden hover:shadow-lg transition-shadow h-full flex flex-col">
                   {news.image_url && (
-                    <img
-                      src={news.image_url}
-                      alt={news.title}
-                      className="w-full h-48 object-cover"
-                    />
+                    <div className="aspect-video w-full overflow-hidden bg-gray-100">
+                      <img
+                        src={news.image_url}
+                        alt={news.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
                   )}
-                  <CardContent className="p-4">
-                    <span className="inline-block px-2 py-1 text-xs font-medium bg-sky-100 text-sky-700 rounded mb-2">
+                  <CardContent className="p-4 flex-1 flex flex-col">
+                    <span className="inline-block px-2 py-1 text-xs font-medium bg-sky-100 text-sky-700 rounded mb-2 w-fit">
                       {news.category}
                     </span>
                     <h3 className="font-semibold text-gray-900 line-clamp-2 mb-2">
                       {news.title}
                     </h3>
-                    <p className="text-sm text-gray-600 line-clamp-2 mb-3">
+                    <p className="text-sm text-gray-600 line-clamp-2 mb-3 flex-1">
                       {news.excerpt}
                     </p>
                     <p className="text-xs text-gray-500 mb-4">{news.date}</p>
@@ -210,7 +212,7 @@ const AdminNews = () => {
                         size="sm"
                         variant="outline"
                         onClick={() => setDeleteConfirm(news)}
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
                       >
                         <Trash2 className="w-4 h-4" />
                       </Button>
@@ -242,17 +244,19 @@ const AdminNews = () => {
               <Label>Foto Cover</Label>
               <div className="mt-2">
                 {imagePreview ? (
-                  <div className="relative inline-block">
-                    <img
-                      src={imagePreview}
-                      alt="Preview"
-                      className="w-full h-48 object-cover rounded-lg"
-                    />
+                  <div className="relative w-full">
+                    <div className="aspect-video w-full rounded-lg overflow-hidden bg-gray-100">
+                      <img
+                        src={imagePreview}
+                        alt="Preview"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
                     <Button
                       type="button"
                       size="sm"
                       variant="destructive"
-                      className="absolute top-2 right-2"
+                      className="absolute top-2 right-2 h-8 w-8 p-0 rounded-full"
                       onClick={() => {
                         setImageFile(null);
                         setImagePreview(null);

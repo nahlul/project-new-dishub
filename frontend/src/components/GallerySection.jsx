@@ -1,11 +1,28 @@
-import React, { useState } from 'react';
-import { gallery } from '../mockData';
-import { X } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { galleryAPI } from '@/lib/api';
+import { X, Loader2 } from 'lucide-react';
 import { Badge } from './ui/badge';
 import { Dialog, DialogContent } from './ui/dialog';
 
 const GallerySection = () => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [gallery, setGallery] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchGallery();
+  }, []);
+
+  const fetchGallery = async () => {
+    try {
+      const { data } = await galleryAPI.getAll();
+      setGallery(data);
+    } catch (error) {
+      console.error('Failed to fetch gallery:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section  className="py-20 bg-gradient-to-b from-gray-50 to-white">
@@ -21,30 +38,42 @@ const GallerySection = () => {
           </p>
         </div>
 
-        {/* Gallery Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {gallery.map((item) => (
+        {/* Loading State */}
+        {loading ? (
+          <div className="flex justify-center items-center py-20">
+            <Loader2 className="w-12 h-12 text-sky-600 animate-spin" />
+          </div>
+        ) : gallery.length === 0 ? (
+          <div className="text-center py-20 text-gray-500">
+            <p>Belum ada foto di galeri</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {gallery.map((item) => (
             <div
               key={item.id}
               className="relative group cursor-pointer overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
               onClick={() => setSelectedImage(item)}
             >
-              <img
-                src={item.image}
-                alt={item.title}
-                className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
-              />
+              <div className="aspect-video w-full overflow-hidden bg-gray-100">
+                <img
+                  src={item.image_url}
+                  alt={item.title || 'Gallery'}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+              </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute bottom-0 left-0 right-0 p-4">
                   <Badge className="bg-sky-600 text-white mb-2">
                     {item.category}
                   </Badge>
-                  <h3 className="text-white font-bold text-lg">{item.title}</h3>
+                  {item.title && <h3 className="text-white font-bold text-lg">{item.title}</h3>}
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         {/* Image Modal */}
         <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
@@ -52,15 +81,17 @@ const GallerySection = () => {
             {selectedImage && (
               <div>
                 <img
-                  src={selectedImage.image}
-                  alt={selectedImage.title}
+                  src={selectedImage.image_url}
+                  alt={selectedImage.title || 'Gallery'}
                   className="w-full h-auto rounded-lg"
                 />
                 <div className="mt-4">
                   <Badge className="bg-sky-600 text-white mb-2">
                     {selectedImage.category}
                   </Badge>
-                  <h3 className="text-2xl font-bold text-gray-900">{selectedImage.title}</h3>
+                  {selectedImage.title && (
+                    <h3 className="text-2xl font-bold text-gray-900">{selectedImage.title}</h3>
+                  )}
                 </div>
               </div>
             )}

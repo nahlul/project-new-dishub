@@ -1,11 +1,29 @@
-import React from 'react';
-import { news } from '../mockData';
-import { Calendar, ArrowRight } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { newsAPI } from '@/lib/api';
+import { Calendar, ArrowRight, Loader2 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 
 const NewsSection = () => {
+  const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchNews();
+  }, []);
+
+  const fetchNews = async () => {
+    try {
+      const { data } = await newsAPI.getAll();
+      setNews(data);
+    } catch (error) {
+      console.error('Failed to fetch news:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section className="py-20 bg-white overflow-x-hidden">
       <div className="container mx-auto px-4">
@@ -20,22 +38,33 @@ const NewsSection = () => {
           </p>
         </div>
 
-        {/* News Grid - Fixed untuk mobile */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
-          {news.map((item) => (
+        {/* Loading State */}
+        {loading ? (
+          <div className="flex justify-center items-center py-20">
+            <Loader2 className="w-12 h-12 text-sky-600 animate-spin" />
+          </div>
+        ) : news.length === 0 ? (
+          <div className="text-center py-20 text-gray-500">
+            <p>Belum ada berita tersedia</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+            {news.map((item) => (
             <Card key={item.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 group hover:scale-105 border-2 hover:border-sky-500 flex flex-col h-full">
-              <div className="relative overflow-hidden h-48 flex-shrink-0">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                />
-                <div className="absolute top-4 left-4">
-                  <Badge className="bg-sky-600 text-white text-xs">
-                    {item.category}
-                  </Badge>
+              {item.image_url && (
+                <div className="relative overflow-hidden h-48 flex-shrink-0">
+                  <img
+                    src={item.image_url}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <Badge className="bg-sky-600 text-white text-xs">
+                      {item.category}
+                    </Badge>
+                  </div>
                 </div>
-              </div>
+              )}
               
               <CardHeader className="flex-grow pb-2">
                 <div className="flex items-center space-x-2 text-xs text-gray-500 mb-2">
@@ -54,19 +83,14 @@ const NewsSection = () => {
               </CardContent>
               
               <CardFooter className="pt-2">
-                <a 
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sky-600 hover:text-sky-700 hover:bg-sky-50 p-0 h-auto font-semibold inline-flex items-center transition-colors text-sm"
-                >
-                  Baca Selengkapnya
-                  <ArrowRight className="ml-2 h-3 w-3 lg:h-4 lg:w-4 flex-shrink-0" />
-                </a>
+                <span className="text-sky-600 font-semibold inline-flex items-center text-sm cursor-default">
+                  {item.date}
+                </span>
               </CardFooter>
             </Card>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         {/* View All Button - Link ke Instagram */}
         <div className="text-center mt-12">

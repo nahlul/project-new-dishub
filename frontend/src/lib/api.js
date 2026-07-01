@@ -44,9 +44,9 @@ export const authAPI = {
 
 // News API
 export const newsAPI = {
-  getAll: () => api.get('/news/'),
+  getAll: () => api.get('/news/', { withCredentials: false }),
   
-  getById: (id) => api.get(`/news/${id}`),
+  getById: (id) => api.get(`/news/${id}`, { withCredentials: false }),
   
   create: (data) => api.post('/news/', data),
   
@@ -65,7 +65,7 @@ export const newsAPI = {
 
 // Gallery API
 export const galleryAPI = {
-  getAll: () => api.get('/gallery/'),
+  getAll: () => api.get('/gallery/', { withCredentials: false }),
   
   upload: (file, title, category) => {
     const formData = new FormData();
@@ -82,13 +82,13 @@ export const galleryAPI = {
 
 // Settings API
 export const settingsAPI = {
-  getContact: () => api.get('/settings/contact'),
+  getContact: () => api.get('/settings/contact', { withCredentials: false }),
   updateContact: (data) => api.put('/settings/contact', data),
   
-  getSocialMedia: () => api.get('/settings/social-media'),
+  getSocialMedia: () => api.get('/settings/social-media', { withCredentials: false }),
   updateSocialMedia: (data) => api.put('/settings/social-media', data),
   
-  getAbout: () => api.get('/settings/about'),
+  getAbout: () => api.get('/settings/about', { withCredentials: false }),
   updateAbout: (content) => api.put('/settings/about', { content }),
 };
 
