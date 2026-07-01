@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from './ui/button';
+import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,34 +17,27 @@ const Header = () => {
   }, []);
 
   const menuItems = [
-    { label: 'Beranda', href: '#home' },
-    { label: 'Tentang', href: '#about' },
-    { label: 'Rute', href: '#routes' },
-    { label: 'Fasilitas', href: '#facilities' },
-    { label: 'Galeri', href: '#gallery' },
-    { label: 'Berita', href: '#news' },
-    { label: 'FAQ', href: '#faq' },
+    { label: 'Beranda', path: '/' },
+    { label: 'Tentang', path: '/tentang' },
+    { label: 'Rute', path: '/rute' },
+    { label: 'Fasilitas', path: '/fasilitas' },
+    { label: 'Galeri', path: '/galeri' },
+    { label: 'Berita', path: '/berita' },
+    { label: 'FAQ', path: '/faq' },
   ];
 
-  const scrollToSection = (e, href) => {
-    e.preventDefault();
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMobileMenuOpen(false);
-    }
-  };
+  const isActive = (path) => location.pathname === path;
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md py-3' : 'bg-white/95 backdrop-blur-sm py-4'
+        isScrolled ? 'bg-white shadow-md py-2' : 'bg-white/95 backdrop-blur-sm py-4'
       }`}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           {/* Logo dengan text Trans Koetaradja */}
-          <a href="#home" className="flex items-center space-x-2" onClick={(e) => scrollToSection(e, '#home')}>
+          <Link to="/" className="flex items-center space-x-2">
             <div className="flex items-center space-x-3">
               {/* Icon Bus/Unta placeholder dengan style Trans Koetaradja */}
               <div className="relative">
@@ -61,30 +56,34 @@ const Header = () => {
                 <span className="text-xl font-bold text-sky-700 leading-tight">Koetaradja</span>
               </div>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-1">
             {menuItems.map((item) => (
-              <a
+              <Link
                 key={item.label}
-                href={item.href}
-                onClick={(e) => scrollToSection(e, item.href)}
-                className="px-4 py-2 text-gray-700 hover:text-sky-600 font-medium transition-colors duration-200 rounded-lg hover:bg-sky-50"
+                to={item.path}
+                className={`px-4 py-2 font-medium transition-colors duration-200 rounded-lg ${
+                  isActive(item.path)
+                    ? 'text-sky-600 bg-sky-50'
+                    : 'text-gray-700 hover:text-sky-600 hover:bg-sky-50'
+                }`}
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
           {/* CTA Button Desktop */}
           <div className="hidden md:block">
-            <Button
-              onClick={(e) => scrollToSection(e, '#download')}
-              className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-200 shadow-md hover:shadow-lg"
-            >
-              Download App
-            </Button>
+            <Link to="/faq">
+              <Button
+                className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-200 shadow-md hover:shadow-lg"
+              >
+                Download App
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -100,22 +99,27 @@ const Header = () => {
         {isMobileMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 border-t border-gray-200 pt-4">
             {menuItems.map((item) => (
-              <a
+              <Link
                 key={item.label}
-                href={item.href}
-                onClick={(e) => scrollToSection(e, item.href)}
-                className="block px-4 py-3 text-gray-700 hover:text-sky-600 hover:bg-sky-50 font-medium transition-colors duration-200 rounded-lg"
+                to={item.path}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`block px-4 py-3 font-medium transition-colors duration-200 rounded-lg ${
+                  isActive(item.path)
+                    ? 'text-sky-600 bg-sky-50'
+                    : 'text-gray-700 hover:text-sky-600 hover:bg-sky-50'
+                }`}
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
             <div className="mt-4 px-4">
-              <Button
-                onClick={(e) => scrollToSection(e, '#download')}
-                className="w-full bg-sky-600 hover:bg-sky-700 text-white py-3 rounded-lg font-semibold transition-all duration-200 shadow-md"
-              >
-                Download App
-              </Button>
+              <Link to="/faq" onClick={() => setIsMobileMenuOpen(false)}>
+                <Button
+                  className="w-full bg-sky-600 hover:bg-sky-700 text-white py-3 rounded-lg font-semibold transition-all duration-200 shadow-md"
+                >
+                  Download App
+                </Button>
+              </Link>
             </div>
           </nav>
         )}

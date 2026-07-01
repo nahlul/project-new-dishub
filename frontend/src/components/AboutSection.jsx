@@ -18,11 +18,11 @@ const AboutSection = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left - Image bus real */}
+            {/* Left - Image bus dari penanews */}
             <div className="relative">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                 <img
-                  src="https://dishub.acehprov.go.id/wp-content/uploads/2025/02/WhatsApp-Image-2025-02-24-at-20.39.53-1-300x200.jpeg"
+                  src="https://penanews.co.id/wp-content/uploads/2025/01/images-13-700x350.jpeg"
                   alt="Bus Trans Koetaradja"
                   className="w-full h-full object-cover"
                   style={{ minHeight: '400px' }}
