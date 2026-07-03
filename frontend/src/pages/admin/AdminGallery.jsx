@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Upload, Trash2, X } from 'lucide-react';
+import { Upload, Trash2, Pencil } from 'lucide-react';
 import { galleryAPI, formatApiErrorDetail } from '@/lib/api';
 import { toast } from 'sonner';
 import {
@@ -31,12 +31,19 @@ const AdminGallery = () => {
   const [gallery, setGallery] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showUploadDialog, setShowUploadDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [editItem, setEditItem] = useState(null);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploadData, setUploadData] = useState({
     title: '',
     category: 'Galeri',
+  });
+  const [editData, setEditData] = useState({
+    title: '',
+    category: '',
   });
 
   useEffect(() => {
@@ -94,6 +101,34 @@ const AdminGallery = () => {
     }
   };
 
+  const handleEditOpen = (item) => {
+    setEditItem(item);
+    setEditData({
+      title: item.title || '',
+      category: item.category || 'Galeri',
+    });
+    setShowEditDialog(true);
+  };
+
+  const handleEditSave = async (e) => {
+    e.preventDefault();
+    if (!editItem) return;
+
+    setSaving(true);
+    try {
+      await galleryAPI.update(editItem.id, editData);
+      toast.success('Foto galeri berhasil diperbarui');
+      fetchGallery();
+      setShowEditDialog(false);
+      setEditItem(null);
+    } catch (error) {
+      const msg = formatApiErrorDetail(error.response?.data?.detail);
+      toast.error(msg || 'Gagal memperbarui foto galeri');
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const handleDelete = async () => {
     try {
       await galleryAPI.delete(deleteConfirm.id);
@@ -111,7 +146,7 @@ const AdminGallery = () => {
       <div className="space-y-6">
         <AdminPageHeader
           title="Kelola Galeri"
-          subtitle="Upload atau hapus foto galeri"
+          subtitle="Upload, edit, atau hapus foto galeri"
           action={
             <Button
               onClick={() => setShowUploadDialog(true)}
@@ -154,7 +189,15 @@ const AdminGallery = () => {
                       alt={item.title || 'Gallery'}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        onClick={() => handleEditOpen(item)}
+                      >
+                        <Pencil className="w-4 h-4 mr-1" />
+                        Edit
+                      </Button>
                       <Button
                         size="sm"
                         variant="destructive"
@@ -165,12 +208,12 @@ const AdminGallery = () => {
                       </Button>
                     </div>
                   </div>
-                  {item.title && (
-                    <CardContent className="p-3">
-                      <p className="text-sm font-medium text-gray-900 truncate">{item.title}</p>
-                      <p className="text-xs text-gray-500">{item.category}</p>
-                    </CardContent>
-                  )}
+                  <CardContent className="p-3">
+                    <p className="text-sm font-medium text-gray-900 truncate">
+                      {item.title || 'Tanpa Judul'}
+                    </p>
+                    <p className="text-xs text-gray-500">{item.category}</p>
+                  </CardContent>
                 </Card>
               </motion.div>
             ))}
@@ -216,19 +259,20 @@ const AdminGallery = () => {
             </div>
 
             <div>
-              <Label htmlFor="title">Judul (Opsional)</Label>
+              <Label htmlFor="upload-title">Judul *</Label>
               <Input
-                id="title"
+                id="upload-title"
                 value={uploadData.title}
                 onChange={(e) => setUploadData({ ...uploadData, title: e.target.value })}
                 placeholder="Contoh: Armada Bus 2025"
+                required
               />
             </div>
 
             <div>
-              <Label htmlFor="category">Kategori</Label>
+              <Label htmlFor="upload-category">Kategori</Label>
               <Input
-                id="category"
+                id="upload-category"
                 value={uploadData.category}
                 onChange={(e) => setUploadData({ ...uploadData, category: e.target.value })}
                 placeholder="Contoh: Bus, Halte, Operasional"
@@ -251,6 +295,68 @@ const AdminGallery = () => {
                 disabled={uploading || selectedFiles.length === 0}
               >
                 {uploading ? 'Mengupload...' : 'Upload'}
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Dialog */}
+      <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Edit Foto Galeri</DialogTitle>
+            <DialogDescription>
+              Perbarui judul dan kategori foto
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleEditSave} className="space-y-4 mt-4">
+            {editItem && (
+              <div className="w-full max-h-48 overflow-hidden rounded-lg">
+                <img
+                  src={editItem.image_url}
+                  alt={editItem.title || 'Preview'}
+                  className="w-full h-48 object-cover rounded-lg"
+                />
+              </div>
+            )}
+
+            <div>
+              <Label htmlFor="edit-title">Judul</Label>
+              <Input
+                id="edit-title"
+                value={editData.title}
+                onChange={(e) => setEditData({ ...editData, title: e.target.value })}
+                placeholder="Masukkan judul foto"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="edit-category">Kategori</Label>
+              <Input
+                id="edit-category"
+                value={editData.category}
+                onChange={(e) => setEditData({ ...editData, category: e.target.value })}
+                placeholder="Contoh: Bus, Halte, Operasional"
+              />
+            </div>
+
+            <div className="flex gap-3 pt-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setShowEditDialog(false)}
+                className="flex-1"
+                disabled={saving}
+              >
+                Batal
+              </Button>
+              <Button
+                type="submit"
+                className="flex-1 bg-sky-600 hover:bg-sky-700"
+                disabled={saving}
+              >
+                {saving ? 'Menyimpan...' : 'Simpan'}
               </Button>
             </div>
           </form>

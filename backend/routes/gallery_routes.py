@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends, Request, UploadFile, File
+from fastapi import APIRouter, HTTPException, Depends, Request, UploadFile, File, Form
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from typing import List
 from datetime import datetime, timezone
@@ -36,8 +36,8 @@ async def get_all_gallery(db: AsyncIOMotorDatabase = Depends(get_db)):
 @router.post("/upload")
 async def upload_gallery_image(
     file: UploadFile = File(...),
-    title: str = None,
-    category: str = "Galeri",
+    title: str = Form(None),
+    category: str = Form("Galeri"),
     request: Request = None,
     db: AsyncIOMotorDatabase = Depends(get_db)
 ):
@@ -84,6 +84,55 @@ async def upload_gallery_image(
     except Exception as e:
         logger.error(f"Upload gallery image error: {e}")
         raise HTTPException(status_code=500, detail="Failed to upload image")
+
+@router.put("/{gallery_id}")
+async def update_gallery_image(
+    gallery_id: str,
+    request: Request,
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Update gallery item title/category (admin only)"""
+    try:
+        # Verify admin authentication
+        await get_current_user(request, db)
+        
+        # Check if gallery item exists
+        gallery = await db.gallery.find_one({"id": gallery_id, "is_deleted": False}, {"_id": 0})
+        if not gallery:
+            raise HTTPException(status_code=404, detail="Gallery image not found")
+        
+        # Parse JSON body
+        body = await request.json()
+        update_data = {}
+        
+        if "title" in body and body["title"] is not None:
+            update_data["title"] = body["title"]
+        if "category" in body and body["category"] is not None:
+            update_data["category"] = body["category"]
+        
+        if not update_data:
+            raise HTTPException(status_code=400, detail="No fields to update")
+        
+        # Update in database
+        result = await db.gallery.update_one(
+            {"id": gallery_id},
+            {"$set": update_data}
+        )
+        
+        if result.modified_count == 0:
+            raise HTTPException(status_code=400, detail="Failed to update gallery item")
+        
+        # Return updated item
+        updated = await db.gallery.find_one({"id": gallery_id}, {"_id": 0})
+        
+        logger.info(f"Gallery image updated: {gallery_id}")
+        return updated
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Update gallery image error: {e}")
+        raise HTTPException(status_code=500, detail="Failed to update gallery item")
 
 @router.delete("/{gallery_id}")
 async def delete_gallery_image(

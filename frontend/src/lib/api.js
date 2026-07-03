@@ -77,6 +77,8 @@ export const galleryAPI = {
     });
   },
   
+  update: (id, data) => api.put(`/gallery/${id}`, data),
+  
   delete: (id) => api.delete(`/gallery/${id}`),
 };
 
