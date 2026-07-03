@@ -60,10 +60,15 @@ api_router.include_router(file_router)
 app.include_router(api_router)
 
 # CORS middleware
+# Read allowed origins from environment variable (comma-separated)
+# Defaults to localhost:3000 for development
+cors_origins_str = os.environ.get("CORS_ORIGINS", "http://localhost:3000")
+cors_origins = [origin.strip() for origin in cors_origins_str.split(",") if origin.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=False,  # Set to False when using wildcard origins
+    allow_origins=cors_origins,
+    allow_credentials=True,  # Required for httpOnly cookie authentication
     allow_methods=["*"],
     allow_headers=["*"],
 )

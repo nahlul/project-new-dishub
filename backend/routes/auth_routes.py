@@ -17,6 +17,10 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
+# Cookie configuration
+COOKIE_SECURE = os.environ.get("COOKIE_SECURE", "false").lower() == "true"
+COOKIE_SAMESITE = os.environ.get("COOKIE_SAMESITE", "lax")
+
 # Dependency to get database
 async def get_db(request: Request) -> AsyncIOMotorDatabase:
     return request.app.state.db
@@ -51,8 +55,8 @@ async def login(
             key="access_token",
             value=access_token,
             httponly=True,
-            secure=False,  # Set to True in production with HTTPS
-            samesite="lax",
+            secure=COOKIE_SECURE,
+            samesite=COOKIE_SAMESITE,
             max_age=900,  # 15 minutes
             path="/"
         )
@@ -60,8 +64,8 @@ async def login(
             key="refresh_token",
             value=refresh_token,
             httponly=True,
-            secure=False,
-            samesite="lax",
+            secure=COOKIE_SECURE,
+            samesite=COOKIE_SAMESITE,
             max_age=604800,  # 7 days
             path="/"
         )
