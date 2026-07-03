@@ -212,6 +212,9 @@ const AdminGallery = () => {
                     <p className="text-sm font-medium text-gray-900 truncate">
                       {item.title || 'Tanpa Judul'}
                     </p>
+                    <p className="text-xs text-sky-600 mt-0.5">
+                      {item.created_at ? new Date(item.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' }) : ''}
+                    </p>
                     <p className="text-xs text-gray-500">{item.category}</p>
                   </CardContent>
                 </Card>

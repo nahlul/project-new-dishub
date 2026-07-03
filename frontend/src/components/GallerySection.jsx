@@ -63,14 +63,17 @@ const GallerySection = () => {
                 />
               </div>
               {/* Caption outside image */}
-              {item.title && (
-                <div className="p-4 bg-white">
+              <div className="p-4 bg-white">
+                {item.title && (
                   <h3 className="text-sm font-semibold text-gray-900 line-clamp-2">{item.title}</h3>
-                  <span className="inline-block mt-2 px-2 py-1 text-xs bg-sky-100 text-sky-700 rounded">
-                    {item.category}
-                  </span>
-                </div>
-              )}
+                )}
+                <p className="text-xs text-sky-600 mt-1">
+                  {item.created_at ? new Date(item.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' }) : ''}
+                </p>
+                <span className="inline-block mt-2 px-2 py-1 text-xs bg-sky-100 text-sky-700 rounded">
+                  {item.category}
+                </span>
+              </div>
             </div>
             ))}
           </div>
@@ -93,6 +96,9 @@ const GallerySection = () => {
                   {selectedImage.title && (
                     <h3 className="text-2xl font-bold text-gray-900">{selectedImage.title}</h3>
                   )}
+                  <p className="text-sm text-sky-600 mt-1">
+                    {selectedImage.created_at ? new Date(selectedImage.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' }) : ''}
+                  </p>
                 </div>
               </div>
             )}
