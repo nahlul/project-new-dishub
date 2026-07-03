@@ -14,6 +14,7 @@ import RoutesPage from "@/pages/RoutesPage";
 import FacilitiesPage from "@/pages/FacilitiesPage";
 import GalleryPage from "@/pages/GalleryPage";
 import NewsPage from "@/pages/NewsPage";
+import NewsDetailPage from "@/pages/NewsDetailPage";
 import FAQPage from "@/pages/FAQPage";
 import DownloadPage from "@/pages/DownloadPage";
 import NotFoundPage from "@/pages/NotFoundPage";
@@ -77,6 +78,7 @@ function App() {
                 <Footer />
               </>
             } />
+            <Route path="/berita/:id" element={<NewsDetailPage />} />
             <Route path="/faq" element={
               <>
                 <Header />

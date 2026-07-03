@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { newsAPI } from '@/lib/api';
 import { Calendar, ArrowRight, Loader2 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
@@ -50,7 +51,8 @@ const NewsSection = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
             {news.map((item) => (
-            <Card key={item.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 group hover:scale-105 border-2 hover:border-sky-500 flex flex-col h-full">
+            <Link key={item.id} to={`/berita/${item.id}`} className="block">
+            <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group hover:scale-105 border-2 hover:border-sky-500 flex flex-col h-full">
               {item.image_url && (
                 <div className="relative overflow-hidden h-48 flex-shrink-0">
                   <img
@@ -83,11 +85,13 @@ const NewsSection = () => {
               </CardContent>
               
               <CardFooter className="pt-2">
-                <span className="text-sky-600 font-semibold inline-flex items-center text-sm cursor-default">
-                  {item.date}
+                <span className="text-sky-600 font-semibold inline-flex items-center text-sm">
+                  Baca Selengkapnya
+                  <ArrowRight className="ml-1 w-4 h-4" />
                 </span>
               </CardFooter>
             </Card>
+            </Link>
             ))}
           </div>
         )}
