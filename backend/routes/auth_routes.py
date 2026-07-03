@@ -40,11 +40,11 @@ async def login(
         admin = await db.admins.find_one({"username": credentials.username}, {"_id": 0})
         
         if not admin:
-            raise HTTPException(status_code=401, detail="Invalid username or password")
+            raise HTTPException(status_code=401, detail="Username atau password salah")
         
         # Verify password
         if not verify_password(credentials.password, admin["password_hash"]):
-            raise HTTPException(status_code=401, detail="Invalid username or password")
+            raise HTTPException(status_code=401, detail="Username atau password salah")
         
         # Create tokens
         access_token = create_access_token(admin["id"], admin["username"])
