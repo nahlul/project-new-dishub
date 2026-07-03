@@ -1,77 +1,53 @@
 import os
 import io
-import requests
 import uuid
 from PIL import Image
 from typing import Tuple
 import logging
+from pathlib import Path
+import mimetypes
 
 logger = logging.getLogger(__name__)
 
-STORAGE_URL = "https://integrations.emergentagent.com/objstore/api/v1/storage"
+# Local storage directory
+STORAGE_DIR = Path(__file__).parent.parent / "local_storage"
 APP_NAME = "transkoetaradja"
-storage_key = None  # Module-level, set once and reused globally
 
-def get_emergent_key() -> str:
-    """Get Emergent LLM key from environment"""
-    key = os.environ.get("EMERGENT_LLM_KEY")
-    if not key:
-        raise ValueError("EMERGENT_LLM_KEY not set in environment")
-    return key
 
-def init_storage() -> str:
-    """Initialize storage and return storage_key. Call ONCE at startup."""
-    global storage_key
-    if storage_key:
-        return storage_key
-    
-    try:
-        resp = requests.post(
-            f"{STORAGE_URL}/init",
-            json={"emergent_key": get_emergent_key()},
-            timeout=30
-        )
-        resp.raise_for_status()
-        storage_key = resp.json()["storage_key"]
-        logger.info("Storage initialized successfully")
-        return storage_key
-    except Exception as e:
-        logger.error(f"Storage init failed: {e}")
-        raise
+def init_storage():
+    """Initialize local storage directory. Call ONCE at startup."""
+    STORAGE_DIR.mkdir(parents=True, exist_ok=True)
+    (STORAGE_DIR / APP_NAME / "news").mkdir(parents=True, exist_ok=True)
+    (STORAGE_DIR / APP_NAME / "gallery").mkdir(parents=True, exist_ok=True)
+    (STORAGE_DIR / APP_NAME / "uploads").mkdir(parents=True, exist_ok=True)
+    logger.info(f"Local storage initialized at: {STORAGE_DIR}")
+
 
 def put_object(path: str, data: bytes, content_type: str) -> dict:
-    """Upload file to storage. Returns {"path": "...", "size": 123, "etag": "..."}"""
-    key = init_storage()
+    """Save file to local storage. Returns {"path": "...", "size": 123}"""
+    file_path = STORAGE_DIR / path
+    file_path.parent.mkdir(parents=True, exist_ok=True)
     
-    try:
-        resp = requests.put(
-            f"{STORAGE_URL}/objects/{path}",
-            headers={"X-Storage-Key": key, "Content-Type": content_type},
-            data=data,
-            timeout=120
-        )
-        resp.raise_for_status()
-        return resp.json()
-    except Exception as e:
-        logger.error(f"Upload failed for {path}: {e}")
-        raise
+    file_path.write_bytes(data)
+    
+    logger.info(f"File saved locally: {path} ({len(data)} bytes)")
+    return {"path": path, "size": len(data)}
+
 
 def get_object(path: str) -> Tuple[bytes, str]:
-    """Download file from storage. Returns (content_bytes, content_type)."""
-    key = init_storage()
+    """Read file from local storage. Returns (content_bytes, content_type)."""
+    file_path = STORAGE_DIR / path
     
-    try:
-        resp = requests.get(
-            f"{STORAGE_URL}/objects/{path}",
-            headers={"X-Storage-Key": key},
-            timeout=60
-        )
-        resp.raise_for_status()
-        content_type = resp.headers.get("Content-Type", "application/octet-stream")
-        return resp.content, content_type
-    except Exception as e:
-        logger.error(f"Download failed for {path}: {e}")
-        raise
+    if not file_path.exists():
+        raise FileNotFoundError(f"File not found: {path}")
+    
+    data = file_path.read_bytes()
+    
+    # Determine content type from extension
+    content_type = mimetypes.guess_type(str(file_path))[0] or "application/octet-stream"
+    
+    return data, content_type
+
 
 def resize_image(image_data: bytes, max_width: int = 1200, max_height: int = 800, quality: int = 85) -> bytes:
     """
@@ -79,7 +55,6 @@ def resize_image(image_data: bytes, max_width: int = 1200, max_height: int = 800
     Returns the processed image as bytes.
     """
     try:
-        # Open image
         img = Image.open(io.BytesIO(image_data))
         
         # Convert RGBA to RGB if necessary
@@ -103,20 +78,21 @@ def resize_image(image_data: bytes, max_width: int = 1200, max_height: int = 800
         logger.error(f"Image resize failed: {e}")
         raise ValueError(f"Failed to process image: {str(e)}")
 
+
 def upload_image(image_data: bytes, filename: str, folder: str = "uploads") -> dict:
     """
-    Upload image with automatic resizing.
+    Upload image with automatic resizing to local storage.
     Returns dict with path and metadata.
     """
     # Resize image
     processed_data = resize_image(image_data)
     
     # Generate unique path
-    ext = filename.split(".")[-1] if "." in filename else "jpg"
+    ext = filename.split(".")[-1].lower() if "." in filename else "jpg"
     unique_filename = f"{uuid.uuid4()}.{ext}"
     path = f"{APP_NAME}/{folder}/{unique_filename}"
     
-    # Upload to storage
+    # Save to local storage
     result = put_object(path, processed_data, "image/jpeg")
     
     return {
@@ -125,6 +101,7 @@ def upload_image(image_data: bytes, filename: str, folder: str = "uploads") -> d
         "size": result["size"],
         "content_type": "image/jpeg"
     }
+
 
 def get_mime_type(filename: str) -> str:
     """Get MIME type from filename extension"""

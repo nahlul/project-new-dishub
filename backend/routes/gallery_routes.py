@@ -54,9 +54,9 @@ async def upload_gallery_image(
         image_data = await file.read()
         upload_result = upload_image(image_data, file.filename, folder="gallery")
         
-        # Generate public URL using frontend URL from env
-        frontend_url = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
-        image_url = f"{frontend_url}/api/files/{upload_result['storage_path']}"
+        # Generate public URL pointing to the BACKEND server (not frontend)
+        backend_url = os.environ.get('BACKEND_URL', 'http://localhost:8001')
+        image_url = f"{backend_url}/api/files/{upload_result['storage_path']}"
         
         # Create gallery entry
         gallery = Gallery(
