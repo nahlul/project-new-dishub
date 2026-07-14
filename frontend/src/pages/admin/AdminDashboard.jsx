@@ -4,9 +4,8 @@ import { motion } from 'framer-motion';
 import AdminLayout from '@/components/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Newspaper, Images, Calendar, TrendingUp, Plus, ArrowRight, Clock, Activity } from 'lucide-react';
+import { Newspaper, Images, Calendar, ArrowRight, Clock, Activity } from 'lucide-react';
 import { newsAPI, galleryAPI } from '@/lib/api';
-import api from '@/lib/api';
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState({
@@ -14,12 +13,10 @@ const AdminDashboard = () => {
     totalGallery: 0,
     recentNews: [],
   });
-  const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchStats();
-    fetchActivities();
   }, []);
 
   const fetchStats = async () => {
@@ -38,15 +35,6 @@ const AdminDashboard = () => {
       console.error('Failed to fetch stats:', error);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const fetchActivities = async () => {
-    try {
-      const { data } = await api.get('/activity-log');
-      setActivities(data);
-    } catch (error) {
-      console.error('Failed to fetch activities:', error);
     }
   };
 
@@ -205,40 +193,48 @@ const AdminDashboard = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Activity className="w-5 h-5 text-sky-600" />
-              Aktivitas Terakhir
+              Informasi Sistem
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {activities.length > 0 ? (
-              <div className="space-y-4">
-                {activities.map((activity, index) => (
-                  <div
-                    key={index}
-                    className="flex items-start gap-3 p-3 rounded-lg bg-gray-50"
-                  >
-                    <div className="w-2 h-2 bg-sky-500 rounded-full mt-2 flex-shrink-0" />
-                    <div className="flex-1">
-                      <p className="text-sm text-gray-900">{activity.message}</p>
-                      <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        {new Date(activity.created_at).toLocaleString('id-ID', {
-                          day: '2-digit',
-                          month: 'short',
-                          year: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="flex items-start gap-3 p-4 rounded-lg bg-sky-50">
+                <Clock className="w-5 h-5 text-sky-600 mt-0.5" />
+                <div>
+                  <p className="text-sm font-medium text-gray-900">Terakhir Diperbarui</p>
+                  <p className="text-xs text-gray-600 mt-1">
+                    {new Date().toLocaleDateString('id-ID', {
+                      day: '2-digit',
+                      month: 'long',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </p>
+                </div>
               </div>
-            ) : (
-              <div className="text-center py-8 text-gray-500">
-                <Activity className="w-12 h-12 mx-auto mb-3 text-gray-400" />
-                <p>Belum ada aktivitas</p>
+              <div className="flex items-start gap-3 p-4 rounded-lg bg-green-50">
+                <Activity className="w-5 h-5 text-green-600 mt-0.5" />
+                <div>
+                  <p className="text-sm font-medium text-gray-900">Status Server</p>
+                  <p className="text-xs text-green-600 font-medium mt-1">Online & Berjalan Normal</p>
+                </div>
               </div>
-            )}
+              <div className="flex items-start gap-3 p-4 rounded-lg bg-purple-50">
+                <Newspaper className="w-5 h-5 text-purple-600 mt-0.5" />
+                <div>
+                  <p className="text-sm font-medium text-gray-900">Total Konten</p>
+                  <p className="text-xs text-gray-600 mt-1">{stats.totalNews} Berita, {stats.totalGallery} Foto</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-4 rounded-lg bg-orange-50">
+                <Calendar className="w-5 h-5 text-orange-600 mt-0.5" />
+                <div>
+                  <p className="text-sm font-medium text-gray-900">Versi Aplikasi</p>
+                  <p className="text-xs text-gray-600 mt-1">Trans Koetaradja CMS v1.0</p>
+                </div>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
