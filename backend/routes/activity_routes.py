@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, Request
 from motor.motor_asyncio import AsyncIOMotorDatabase
-from datetime import datetime, timezone
 import logging
+
+from utils.activity_utils import log_activity  # re-export for backward compat
 
 logger = logging.getLogger(__name__)
 
@@ -22,16 +23,3 @@ async def get_activity_log(db: AsyncIOMotorDatabase = Depends(get_db)):
     except Exception as e:
         logger.error(f"Get activity log error: {e}")
         return []
-
-
-async def log_activity(db, message: str, admin_username: str = "admin"):
-    """Helper function to log an activity. Call this from other routes."""
-    try:
-        activity = {
-            "message": message,
-            "admin": admin_username,
-            "created_at": datetime.now(timezone.utc).isoformat(),
-        }
-        await db.activity_log.insert_one(activity)
-    except Exception as e:
-        logger.error(f"Failed to log activity: {e}")

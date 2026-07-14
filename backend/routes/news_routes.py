@@ -8,7 +8,7 @@ import os
 from models.schemas import News, NewsCreate, NewsUpdate
 from utils.auth_utils import get_current_user
 from utils.storage_utils import upload_image, get_object
-from routes.activity_routes import log_activity
+from utils.activity_utils import log_activity
 
 logger = logging.getLogger(__name__)
 
