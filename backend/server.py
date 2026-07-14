@@ -197,7 +197,7 @@ async def seed_initial_data():
                 "whatsapp": "https://wa.me/6281167123490",
                 "instagram": "https://www.instagram.com/trans.koetaradja",
                 "facebook": "https://www.facebook.com/dishub.aceh",
-                "twitter": "https://twitter.com/dishubaceh",
+                "twitter": "https://x.com/dishub_aceh",
                 "updated_at": datetime.now(timezone.utc).isoformat()
             }
             await db.social_media.insert_one(social_doc)

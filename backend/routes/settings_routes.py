@@ -89,7 +89,7 @@ async def get_social_media(db: AsyncIOMotorDatabase = Depends(get_db)):
                 whatsapp="https://wa.me/6281167123490",
                 instagram="https://www.instagram.com/transkoetaradja",
                 facebook="https://www.facebook.com/transkoetaradja",
-                twitter="https://twitter.com/transkoetaradja"
+                twitter="https://x.com/dishub_aceh"
             )
         return social
     except Exception as e:
