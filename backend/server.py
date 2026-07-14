@@ -17,6 +17,7 @@ from routes.news_routes import router as news_router
 from routes.gallery_routes import router as gallery_router
 from routes.settings_routes import router as settings_router
 from routes.file_routes import router as file_router
+from routes.activity_routes import router as activity_router
 
 # Import utilities
 from utils.auth_utils import hash_password, verify_password
@@ -55,6 +56,7 @@ api_router.include_router(news_router)
 api_router.include_router(gallery_router)
 api_router.include_router(settings_router)
 api_router.include_router(file_router)
+api_router.include_router(activity_router)
 
 # Include API router in main app
 app.include_router(api_router)

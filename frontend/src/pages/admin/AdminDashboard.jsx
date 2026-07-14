@@ -4,8 +4,9 @@ import { motion } from 'framer-motion';
 import AdminLayout from '@/components/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Newspaper, Images, Calendar, TrendingUp, Plus, ArrowRight } from 'lucide-react';
+import { Newspaper, Images, Calendar, TrendingUp, Plus, ArrowRight, Clock, Activity } from 'lucide-react';
 import { newsAPI, galleryAPI } from '@/lib/api';
+import api from '@/lib/api';
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState({
@@ -13,10 +14,12 @@ const AdminDashboard = () => {
     totalGallery: 0,
     recentNews: [],
   });
+  const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchStats();
+    fetchActivities();
   }, []);
 
   const fetchStats = async () => {
@@ -35,6 +38,15 @@ const AdminDashboard = () => {
       console.error('Failed to fetch stats:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchActivities = async () => {
+    try {
+      const { data } = await api.get('/activity-log');
+      setActivities(data);
+    } catch (error) {
+      console.error('Failed to fetch activities:', error);
     }
   };
 
@@ -188,32 +200,45 @@ const AdminDashboard = () => {
           </CardContent>
         </Card>
 
-        {/* Quick Actions */}
+        {/* Aktivitas Terakhir */}
         <Card>
           <CardHeader>
-            <CardTitle>Aksi Cepat</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <Activity className="w-5 h-5 text-sky-600" />
+              Aktivitas Terakhir
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {[
-                { label: 'Kelola Berita', link: '/admin/news', icon: Newspaper, color: 'sky' },
-                { label: 'Kelola Galeri', link: '/admin/gallery', icon: Images, color: 'purple' },
-                { label: 'Edit Kontak', link: '/admin/contact', icon: TrendingUp, color: 'green' },
-                { label: 'Ganti Password', link: '/admin/change-password', icon: Plus, color: 'orange' },
-              ].map((action) => {
-                const Icon = action.icon;
-                return (
-                  <Link
-                    key={action.link}
-                    to={action.link}
-                    className={`p-4 rounded-lg border-2 border-${action.color}-200 hover:border-${action.color}-400 hover:bg-${action.color}-50 transition-all group`}
+            {activities.length > 0 ? (
+              <div className="space-y-4">
+                {activities.map((activity, index) => (
+                  <div
+                    key={index}
+                    className="flex items-start gap-3 p-3 rounded-lg bg-gray-50"
                   >
-                    <Icon className={`w-8 h-8 text-${action.color}-600 mb-2 group-hover:scale-110 transition-transform`} />
-                    <p className="font-medium text-gray-900">{action.label}</p>
-                  </Link>
-                );
-              })}
-            </div>
+                    <div className="w-2 h-2 bg-sky-500 rounded-full mt-2 flex-shrink-0" />
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-900">{activity.message}</p>
+                      <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {new Date(activity.created_at).toLocaleString('id-ID', {
+                          day: '2-digit',
+                          month: 'short',
+                          year: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-8 text-gray-500">
+                <Activity className="w-12 h-12 mx-auto mb-3 text-gray-400" />
+                <p>Belum ada aktivitas</p>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

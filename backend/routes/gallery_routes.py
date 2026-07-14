@@ -8,6 +8,7 @@ import os
 from models.schemas import Gallery, GalleryCreate
 from utils.auth_utils import get_current_user
 from utils.storage_utils import upload_image
+from routes.activity_routes import log_activity
 
 logger = logging.getLogger(__name__)
 
@@ -73,6 +74,7 @@ async def upload_gallery_image(
         await db.gallery.insert_one(gallery_dict)
         
         logger.info(f"Gallery image uploaded: {gallery.id}")
+        await log_activity(db, f"Mengupload foto galeri: {gallery.title}")
         
         return {
             "message": "Image uploaded successfully",
