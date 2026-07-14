@@ -195,7 +195,7 @@ async def seed_initial_data():
             social_doc = {
                 "id": "social_media",
                 "whatsapp": "https://wa.me/6281167123490",
-                "instagram": "https://www.instagram.com/dishubaceh",
+                "instagram": "https://www.instagram.com/trans.koetaradja",
                 "facebook": "https://www.facebook.com/dishub.aceh",
                 "twitter": "https://twitter.com/dishubaceh",
                 "updated_at": datetime.now(timezone.utc).isoformat()

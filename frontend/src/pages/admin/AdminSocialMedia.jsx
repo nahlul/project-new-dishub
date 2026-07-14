@@ -106,7 +106,7 @@ const AdminSocialMedia = () => {
                   type="url"
                   value={formData.instagram}
                   onChange={(e) => setFormData({ ...formData, instagram: e.target.value })}
-                  placeholder="https://www.instagram.com/dishubaceh"
+                  placeholder="https://www.instagram.com/trans.koetaradja"
                   required
                 />
               </div>
