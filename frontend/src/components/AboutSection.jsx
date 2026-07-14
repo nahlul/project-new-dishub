@@ -1,7 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { CheckCircle2, Award, Users, Shield, Calendar, TrendingUp } from 'lucide-react';
+import { settingsAPI } from '@/lib/api';
 
 const AboutSection = () => {
+  const [aboutContent, setAboutContent] = useState('');
+
+  useEffect(() => {
+    fetchAbout();
+  }, []);
+
+  const fetchAbout = async () => {
+    try {
+      const { data } = await settingsAPI.getAbout();
+      setAboutContent(data.content || '');
+    } catch (error) {
+      console.error('Failed to fetch about:', error);
+    }
+  };
+
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
@@ -16,6 +32,21 @@ const AboutSection = () => {
               Sistem transportasi publik yang melayani masyarakat Banda Aceh dan Aceh Besar dengan komitmen kualitas dan kenyamanan terbaik.
             </p>
           </div>
+
+          {/* Dynamic Content from Admin "Edit Sejarah" */}
+          {aboutContent && (
+            <div className="mb-16 max-w-4xl mx-auto bg-gradient-to-br from-sky-50 to-blue-50 p-8 rounded-2xl border border-sky-100">
+              <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+                {aboutContent.split('\n').map((paragraph, index) => (
+                  paragraph.trim() && (
+                    <p key={index} className="mb-4 last:mb-0">
+                      {paragraph}
+                    </p>
+                  )
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
             {/* Left - Image dari penanews */}
