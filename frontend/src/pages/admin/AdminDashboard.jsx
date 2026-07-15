@@ -201,15 +201,11 @@ const AdminDashboard = () => {
               <div className="flex items-start gap-3 p-4 rounded-lg bg-sky-50">
                 <Clock className="w-5 h-5 text-sky-600 mt-0.5" />
                 <div>
-                  <p className="text-sm font-medium text-gray-900">Terakhir Diperbarui</p>
+                  <p className="text-sm font-medium text-gray-900">Berita Terakhir Ditambah</p>
                   <p className="text-xs text-gray-600 mt-1">
-                    {new Date().toLocaleDateString('id-ID', {
-                      day: '2-digit',
-                      month: 'long',
-                      year: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
+                    {stats.recentNews.length > 0
+                      ? stats.recentNews[0].date
+                      : 'Belum ada berita'}
                   </p>
                 </div>
               </div>
