@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import AdminLayout from '@/components/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Newspaper, Images, Calendar, ArrowRight, Clock, Activity } from 'lucide-react';
+import { Newspaper, Images, Calendar, ArrowRight, Clock, Activity, Plus } from 'lucide-react';
 import { newsAPI, galleryAPI } from '@/lib/api';
 
 const AdminDashboard = () => {
