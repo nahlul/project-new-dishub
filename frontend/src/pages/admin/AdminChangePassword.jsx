@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 import AdminLayout from '@/components/AdminLayout';
 import AdminPageHeader from '@/components/AdminPageHeader';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -12,6 +13,7 @@ import { toast } from 'sonner';
 
 const AdminChangePassword = () => {
   const navigate = useNavigate();
+  const { logout } = useAuth();
   const [saving, setSaving] = useState(false);
   const [formData, setFormData] = useState({
     currentPassword: '',
@@ -42,9 +44,10 @@ const AdminChangePassword = () => {
         formData.newUsername || undefined
       );
       toast.success('Password berhasil diubah! Silakan login kembali.');
-      setTimeout(() => {
+      setTimeout(async () => {
+        await logout();
         navigate('/admin');
-      }, 2000);
+      }, 1500);
     } catch (error) {
       const msg = formatApiErrorDetail(error.response?.data?.detail);
       toast.error(msg || 'Gagal mengubah password');
