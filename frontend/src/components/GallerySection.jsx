@@ -55,7 +55,7 @@ const GallerySection = () => {
               className="relative group cursor-pointer overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
               onClick={() => setSelectedImage(item)}
             >
-              <div className="aspect-square w-full overflow-hidden bg-gray-100">
+              <div className="aspect-[4/3] w-full overflow-hidden bg-gray-100">
                 <img
                   src={item.image_url}
                   alt={item.title || 'Gallery'}
@@ -81,14 +81,16 @@ const GallerySection = () => {
 
         {/* Image Modal */}
         <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
-          <DialogContent className="max-w-4xl">
+          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
             {selectedImage && (
               <div>
-                <img
-                  src={selectedImage.image_url}
-                  alt={selectedImage.title || 'Gallery'}
-                  className="w-full h-auto rounded-lg"
-                />
+                <div className="w-full max-h-[60vh] overflow-hidden rounded-lg bg-gray-100 flex items-center justify-center">
+                  <img
+                    src={selectedImage.image_url}
+                    alt={selectedImage.title || 'Gallery'}
+                    className="w-full h-full object-contain max-h-[60vh]"
+                  />
+                </div>
                 <div className="mt-4">
                   <Badge className="bg-sky-600 text-white mb-2">
                     {selectedImage.category}
