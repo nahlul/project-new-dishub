@@ -1,9 +1,10 @@
-import React, { useRef, useCallback, useEffect } from 'react';
+import React, { useRef, useCallback, useEffect, useState } from 'react';
 import { Bold, Italic, Underline, List, ListOrdered, Heading2, Heading3, AlignLeft, AlignCenter, Minus } from 'lucide-react';
 
 const RichTextEditor = ({ value, onChange, placeholder = 'Tulis konten di sini...' }) => {
   const editorRef = useRef(null);
   const isInitialized = useRef(false);
+  const [activeFormats, setActiveFormats] = useState({});
 
   // Set initial content
   useEffect(() => {
@@ -22,16 +23,46 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Tulis konten di sini..
     }
   }, [value]);
 
+  // Check which formats are active at current cursor position
+  const checkActiveFormats = useCallback(() => {
+    const formats = {
+      bold: document.queryCommandState('bold'),
+      italic: document.queryCommandState('italic'),
+      underline: document.queryCommandState('underline'),
+      insertUnorderedList: document.queryCommandState('insertUnorderedList'),
+      insertOrderedList: document.queryCommandState('insertOrderedList'),
+      justifyCenter: document.queryCommandState('justifyCenter'),
+    };
+
+    // Check block format (h2, h3, p)
+    const block = document.queryCommandValue('formatBlock');
+    formats.h2 = block === 'h2';
+    formats.h3 = block === 'h3';
+    formats.p = block === 'p' || block === '';
+
+    setActiveFormats(formats);
+  }, []);
+
   const handleInput = useCallback(() => {
     if (editorRef.current && onChange) {
       onChange(editorRef.current.innerHTML);
     }
-  }, [onChange]);
+    checkActiveFormats();
+  }, [onChange, checkActiveFormats]);
 
-  const execCommand = (command, value = null) => {
-    document.execCommand(command, false, value);
+  const handleKeyUp = useCallback(() => {
+    checkActiveFormats();
+  }, [checkActiveFormats]);
+
+  const handleMouseUp = useCallback(() => {
+    checkActiveFormats();
+  }, [checkActiveFormats]);
+
+  const execCommand = (command, val = null) => {
+    document.execCommand(command, false, val);
     editorRef.current?.focus();
     handleInput();
+    checkActiveFormats();
   };
 
   const ToolbarButton = ({ onClick, active, children, title }) => (
@@ -39,8 +70,10 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Tulis konten di sini..
       type="button"
       onClick={onClick}
       title={title}
-      className={`p-2 rounded hover:bg-sky-100 transition-colors ${
-        active ? 'bg-sky-100 text-sky-700' : 'text-gray-600'
+      className={`p-2 rounded transition-colors ${
+        active
+          ? 'bg-sky-600 text-white shadow-sm'
+          : 'text-gray-600 hover:bg-gray-200'
       }`}
     >
       {children}
@@ -51,43 +84,43 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Tulis konten di sini..
     <div className="border-2 border-gray-200 rounded-lg overflow-hidden focus-within:border-sky-500 transition-colors">
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-0.5 p-2 bg-gray-50 border-b border-gray-200">
-        <ToolbarButton onClick={() => execCommand('bold')} title="Bold (Ctrl+B)">
+        <ToolbarButton onClick={() => execCommand('bold')} active={activeFormats.bold} title="Bold (Ctrl+B)">
           <Bold className="w-4 h-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={() => execCommand('italic')} title="Italic (Ctrl+I)">
+        <ToolbarButton onClick={() => execCommand('italic')} active={activeFormats.italic} title="Italic (Ctrl+I)">
           <Italic className="w-4 h-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={() => execCommand('underline')} title="Underline (Ctrl+U)">
+        <ToolbarButton onClick={() => execCommand('underline')} active={activeFormats.underline} title="Underline (Ctrl+U)">
           <Underline className="w-4 h-4" />
         </ToolbarButton>
 
         <div className="w-px h-6 bg-gray-300 mx-1" />
 
-        <ToolbarButton onClick={() => execCommand('formatBlock', 'h2')} title="Heading Besar">
+        <ToolbarButton onClick={() => execCommand('formatBlock', 'h2')} active={activeFormats.h2} title="Heading Besar">
           <Heading2 className="w-4 h-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={() => execCommand('formatBlock', 'h3')} title="Heading Kecil">
+        <ToolbarButton onClick={() => execCommand('formatBlock', 'h3')} active={activeFormats.h3} title="Heading Kecil">
           <Heading3 className="w-4 h-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={() => execCommand('formatBlock', 'p')} title="Paragraf">
+        <ToolbarButton onClick={() => execCommand('formatBlock', 'p')} active={activeFormats.p} title="Paragraf">
           <AlignLeft className="w-4 h-4" />
         </ToolbarButton>
 
         <div className="w-px h-6 bg-gray-300 mx-1" />
 
-        <ToolbarButton onClick={() => execCommand('insertUnorderedList')} title="Bullet List">
+        <ToolbarButton onClick={() => execCommand('insertUnorderedList')} active={activeFormats.insertUnorderedList} title="Bullet List">
           <List className="w-4 h-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={() => execCommand('insertOrderedList')} title="Numbered List">
+        <ToolbarButton onClick={() => execCommand('insertOrderedList')} active={activeFormats.insertOrderedList} title="Numbered List">
           <ListOrdered className="w-4 h-4" />
         </ToolbarButton>
 
         <div className="w-px h-6 bg-gray-300 mx-1" />
 
-        <ToolbarButton onClick={() => execCommand('justifyCenter')} title="Center">
+        <ToolbarButton onClick={() => execCommand('justifyCenter')} active={activeFormats.justifyCenter} title="Center">
           <AlignCenter className="w-4 h-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={() => execCommand('insertHorizontalRule')} title="Garis Pemisah">
+        <ToolbarButton onClick={() => execCommand('insertHorizontalRule')} active={false} title="Garis Pemisah">
           <Minus className="w-4 h-4" />
         </ToolbarButton>
       </div>
@@ -97,6 +130,8 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Tulis konten di sini..
         ref={editorRef}
         contentEditable
         onInput={handleInput}
+        onKeyUp={handleKeyUp}
+        onMouseUp={handleMouseUp}
         data-placeholder={placeholder}
         className="min-h-[250px] p-4 text-gray-800 leading-relaxed focus:outline-none prose prose-sm max-w-none
           [&:empty]:before:content-[attr(data-placeholder)] [&:empty]:before:text-gray-400
