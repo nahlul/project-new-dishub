@@ -1,12 +1,11 @@
 import React, { useRef, useCallback, useEffect, useState } from 'react';
-import { Bold, Italic, Underline, List, ListOrdered, Heading2, Heading3, AlignLeft, AlignCenter, Minus } from 'lucide-react';
+import { Bold, Italic, Underline, List, ListOrdered, Heading2, Heading3, AlignCenter, AlignLeft, Minus } from 'lucide-react';
 
 const RichTextEditor = ({ value, onChange, placeholder = 'Tulis konten di sini...' }) => {
   const editorRef = useRef(null);
   const isInitialized = useRef(false);
   const [activeFormats, setActiveFormats] = useState({});
 
-  // Set initial content
   useEffect(() => {
     if (editorRef.current && !isInitialized.current) {
       editorRef.current.innerHTML = value || '';
@@ -14,7 +13,6 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Tulis konten di sini..
     }
   }, []);
 
-  // Update when value changes externally (e.g., editing existing news)
   useEffect(() => {
     if (editorRef.current && value !== undefined) {
       if (editorRef.current.innerHTML !== value) {
@@ -23,22 +21,20 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Tulis konten di sini..
     }
   }, [value]);
 
-  // Check which formats are active at current cursor position
   const checkActiveFormats = useCallback(() => {
     const formats = {
       bold: document.queryCommandState('bold'),
       italic: document.queryCommandState('italic'),
       underline: document.queryCommandState('underline'),
-      insertUnorderedList: document.queryCommandState('insertUnorderedList'),
-      insertOrderedList: document.queryCommandState('insertOrderedList'),
-      justifyCenter: document.queryCommandState('justifyCenter'),
+      unorderedList: document.queryCommandState('insertUnorderedList'),
+      orderedList: document.queryCommandState('insertOrderedList'),
+      center: document.queryCommandState('justifyCenter'),
     };
 
-    // Check block format (h2, h3, p)
+    // Check heading
     const block = document.queryCommandValue('formatBlock');
-    formats.h2 = block === 'h2';
-    formats.h3 = block === 'h3';
-    formats.p = block === 'p' || block === '';
+    formats.h2 = block.toLowerCase() === 'h2';
+    formats.h3 = block.toLowerCase() === 'h3';
 
     setActiveFormats(formats);
   }, []);
@@ -50,30 +46,23 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Tulis konten di sini..
     checkActiveFormats();
   }, [onChange, checkActiveFormats]);
 
-  const handleKeyUp = useCallback(() => {
-    checkActiveFormats();
-  }, [checkActiveFormats]);
-
-  const handleMouseUp = useCallback(() => {
-    checkActiveFormats();
-  }, [checkActiveFormats]);
-
   const execCommand = (command, val = null) => {
     document.execCommand(command, false, val);
     editorRef.current?.focus();
     handleInput();
-    checkActiveFormats();
+    setTimeout(checkActiveFormats, 10);
   };
 
   const ToolbarButton = ({ onClick, active, children, title }) => (
     <button
       type="button"
+      onMouseDown={(e) => e.preventDefault()}
       onClick={onClick}
       title={title}
-      className={`p-2 rounded transition-colors ${
+      className={`p-2 rounded transition-all duration-150 ${
         active
-          ? 'bg-sky-600 text-white shadow-sm'
-          : 'text-gray-600 hover:bg-gray-200'
+          ? 'bg-sky-600 text-white shadow-sm scale-95'
+          : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900'
       }`}
     >
       {children}
@@ -83,7 +72,7 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Tulis konten di sini..
   return (
     <div className="border-2 border-gray-200 rounded-lg overflow-hidden focus-within:border-sky-500 transition-colors">
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-0.5 p-2 bg-gray-50 border-b border-gray-200">
+      <div className="flex flex-wrap items-center gap-1 p-2 bg-gray-50 border-b border-gray-200">
         <ToolbarButton onClick={() => execCommand('bold')} active={activeFormats.bold} title="Bold (Ctrl+B)">
           <Bold className="w-4 h-4" />
         </ToolbarButton>
@@ -102,23 +91,23 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Tulis konten di sini..
         <ToolbarButton onClick={() => execCommand('formatBlock', 'h3')} active={activeFormats.h3} title="Heading Kecil">
           <Heading3 className="w-4 h-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={() => execCommand('formatBlock', 'p')} active={activeFormats.p} title="Paragraf">
-          <AlignLeft className="w-4 h-4" />
-        </ToolbarButton>
 
         <div className="w-px h-6 bg-gray-300 mx-1" />
 
-        <ToolbarButton onClick={() => execCommand('insertUnorderedList')} active={activeFormats.insertUnorderedList} title="Bullet List">
+        <ToolbarButton onClick={() => execCommand('insertUnorderedList')} active={activeFormats.unorderedList} title="Bullet List">
           <List className="w-4 h-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={() => execCommand('insertOrderedList')} active={activeFormats.insertOrderedList} title="Numbered List">
+        <ToolbarButton onClick={() => execCommand('insertOrderedList')} active={activeFormats.orderedList} title="Numbered List">
           <ListOrdered className="w-4 h-4" />
         </ToolbarButton>
 
         <div className="w-px h-6 bg-gray-300 mx-1" />
 
-        <ToolbarButton onClick={() => execCommand('justifyCenter')} active={activeFormats.justifyCenter} title="Center">
+        <ToolbarButton onClick={() => execCommand('justifyCenter')} active={activeFormats.center} title="Rata Tengah">
           <AlignCenter className="w-4 h-4" />
+        </ToolbarButton>
+        <ToolbarButton onClick={() => execCommand('justifyLeft')} active={false} title="Rata Kiri">
+          <AlignLeft className="w-4 h-4" />
         </ToolbarButton>
         <ToolbarButton onClick={() => execCommand('insertHorizontalRule')} active={false} title="Garis Pemisah">
           <Minus className="w-4 h-4" />
@@ -130,8 +119,9 @@ const RichTextEditor = ({ value, onChange, placeholder = 'Tulis konten di sini..
         ref={editorRef}
         contentEditable
         onInput={handleInput}
-        onKeyUp={handleKeyUp}
-        onMouseUp={handleMouseUp}
+        onKeyUp={checkActiveFormats}
+        onMouseUp={checkActiveFormats}
+        onFocus={checkActiveFormats}
         data-placeholder={placeholder}
         className="min-h-[250px] p-4 text-gray-800 leading-relaxed focus:outline-none prose prose-sm max-w-none
           [&:empty]:before:content-[attr(data-placeholder)] [&:empty]:before:text-gray-400
