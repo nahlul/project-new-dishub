@@ -149,20 +149,15 @@ const NewsDetailPage = () => {
           )}
 
           {/* Content */}
-          <div
-            className="prose prose-lg max-w-none text-gray-700 leading-relaxed
-              [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:mt-6 [&_h2]:mb-3
-              [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:mt-4 [&_h3]:mb-2
-              [&_p]:mb-4
-              [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4
-              [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-4
-              [&_li]:mb-1
-              [&_hr]:my-6 [&_hr]:border-gray-300
-              [&_strong]:font-bold
-              [&_em]:italic
-              [&_u]:underline"
-            dangerouslySetInnerHTML={{ __html: news.content }}
-          />
+          <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+            {news.content.split('\n').map((paragraph, index) => (
+              paragraph.trim() && (
+                <p key={index} className="mb-4">
+                  {paragraph}
+                </p>
+              )
+            ))}
+          </div>
 
           {/* Share Buttons */}
           <div className="mt-10 pt-6 border-t border-gray-200">

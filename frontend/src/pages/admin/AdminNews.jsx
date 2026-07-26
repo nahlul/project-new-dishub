@@ -10,7 +10,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Plus, Pencil, Trash2, Upload, X } from 'lucide-react';
 import { newsAPI, formatApiErrorDetail } from '@/lib/api';
 import { toast } from 'sonner';
-import RichTextEditor from '@/components/RichTextEditor';
 import {
   Dialog,
   DialogContent,
@@ -318,10 +317,13 @@ const AdminNews = () => {
 
             <div>
               <Label htmlFor="content">Isi Berita *</Label>
-              <RichTextEditor
+              <Textarea
+                id="content"
                 value={formData.content}
-                onChange={(val) => setFormData({ ...formData, content: val })}
-                placeholder="Tulis isi berita lengkap di sini..."
+                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                placeholder="Tulis isi berita lengkap di sini"
+                rows={8}
+                required
               />
             </div>
 
