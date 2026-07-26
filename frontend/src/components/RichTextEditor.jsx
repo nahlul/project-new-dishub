@@ -1,76 +1,113 @@
-import React, { useMemo } from 'react';
-import ReactQuill from 'react-quill-new';
-import 'react-quill-new/dist/quill.snow.css';
+import React from 'react';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import {
+  ClassicEditor,
+  Essentials,
+  Bold,
+  Italic,
+  Underline,
+  Strikethrough,
+  Heading,
+  Font,
+  Alignment,
+  List,
+  Indent,
+  Link,
+  BlockQuote,
+  Undo,
+  Paragraph,
+  HorizontalLine,
+  SourceEditing,
+} from 'ckeditor5';
+import 'ckeditor5/ckeditor5.css';
 
 const RichTextEditor = ({ value, onChange, placeholder = 'Tulis konten di sini...' }) => {
-  const modules = useMemo(() => ({
-    toolbar: [
-      [{ 'header': [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ 'color': [] }, { 'background': [] }],
-      [{ 'align': [] }],
-      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-      [{ 'indent': '-1' }, { 'indent': '+1' }],
-      ['blockquote'],
-      ['link'],
-      ['clean'],
+  const editorConfig = {
+    plugins: [
+      Essentials,
+      Bold,
+      Italic,
+      Underline,
+      Strikethrough,
+      Heading,
+      Font,
+      Alignment,
+      List,
+      Indent,
+      Link,
+      BlockQuote,
+      Undo,
+      Paragraph,
+      HorizontalLine,
+      SourceEditing,
     ],
-  }), []);
-
-  const formats = [
-    'header',
-    'bold', 'italic', 'underline', 'strike',
-    'color', 'background',
-    'align',
-    'list', 'bullet',
-    'indent',
-    'blockquote',
-    'link',
-  ];
+    toolbar: {
+      items: [
+        'undo', 'redo',
+        '|',
+        'heading',
+        '|',
+        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor',
+        '|',
+        'bold', 'italic', 'underline', 'strikethrough',
+        '|',
+        'alignment',
+        '|',
+        'numberedList', 'bulletedList',
+        'outdent', 'indent',
+        '|',
+        'blockQuote', 'horizontalLine', 'link',
+        '|',
+        'sourceEditing',
+      ],
+      shouldNotGroupWhenFull: false,
+    },
+    placeholder: placeholder,
+    heading: {
+      options: [
+        { model: 'paragraph', title: 'Normal', class: 'ck-heading_paragraph' },
+        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+      ],
+    },
+    fontSize: {
+      options: [10, 12, 14, 16, 18, 20, 24, 28, 32],
+    },
+    fontFamily: {
+      options: [
+        'default',
+        'Arial, Helvetica, sans-serif',
+        'Georgia, serif',
+        'Times New Roman, Times, serif',
+        'Verdana, Geneva, sans-serif',
+      ],
+    },
+  };
 
   return (
-    <div className="rich-editor">
-      <ReactQuill
-        theme="snow"
-        value={value || ''}
-        onChange={onChange}
-        modules={modules}
-        formats={formats}
-        placeholder={placeholder}
+    <div className="ck-editor-wrapper">
+      <CKEditor
+        editor={ClassicEditor}
+        config={editorConfig}
+        data={value || ''}
+        onChange={(event, editor) => {
+          const data = editor.getData();
+          if (onChange) onChange(data);
+        }}
       />
       <style>{`
-        .rich-editor .ql-container {
-          min-height: 250px;
+        .ck-editor-wrapper .ck-editor__editable {
+          min-height: 300px;
           font-size: 15px;
-          font-family: inherit;
         }
-        .rich-editor .ql-editor {
-          min-height: 250px;
-          line-height: 1.8;
-        }
-        .rich-editor .ql-toolbar {
-          border-top-left-radius: 8px;
-          border-top-right-radius: 8px;
-          background: #f9fafb;
-          border-color: #e5e7eb;
-        }
-        .rich-editor .ql-container {
+        .ck-editor-wrapper .ck.ck-editor__main > .ck-editor__editable {
           border-bottom-left-radius: 8px;
           border-bottom-right-radius: 8px;
-          border-color: #e5e7eb;
         }
-        .rich-editor .ql-toolbar .ql-active {
-          color: #0284c7 !important;
-        }
-        .rich-editor .ql-toolbar .ql-active .ql-stroke {
-          stroke: #0284c7 !important;
-        }
-        .rich-editor .ql-toolbar .ql-active .ql-fill {
-          fill: #0284c7 !important;
-        }
-        .rich-editor .ql-editor.ql-blank::before {
-          color: #9ca3af;
-          font-style: normal;
+        .ck-editor-wrapper .ck.ck-toolbar {
+          border-top-left-radius: 8px;
+          border-top-right-radius: 8px;
         }
       `}</style>
     </div>
