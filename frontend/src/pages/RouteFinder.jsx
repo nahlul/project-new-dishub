@@ -90,12 +90,12 @@ const RouteFinder = () => {
     <section className="py-12 bg-gradient-to-b from-sky-50 to-white min-h-screen">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-6">
-          <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
+        <div className="text-center mb-8 pt-6">
+          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
             Cari Rute & Jadwal
           </h2>
-          <div className="w-16 h-1 bg-sky-600 mx-auto mb-3" />
-          <p className="text-sm text-gray-600 max-w-2xl mx-auto">
+          <div className="w-20 h-1 bg-sky-600 mx-auto mb-4" />
+          <p className="text-base text-gray-600 max-w-2xl mx-auto">
             Cari halte terdekat dan lihat jadwal bus Trans Koetaradja
           </p>
         </div>
