@@ -11,7 +11,7 @@ import { Toaster } from "@/components/ui/sonner";
 // Public Pages
 import HomePage from "@/pages/HomePage";
 import AboutPage from "@/pages/AboutPage";
-import RoutesPage from "@/pages/RoutesPage";
+import RouteFinder from "@/pages/RouteFinder";
 import FacilitiesPage from "@/pages/FacilitiesPage";
 import GalleryPage from "@/pages/GalleryPage";
 import NewsPage from "@/pages/NewsPage";
@@ -55,7 +55,7 @@ function App() {
             <Route path="/rute" element={
               <>
                 <Header />
-                <main><RoutesPage /></main>
+                <main><RouteFinder /></main>
                 <Footer />
               </>
             } />

@@ -18,10 +18,14 @@ from routes.gallery_routes import router as gallery_router
 from routes.settings_routes import router as settings_router
 from routes.file_routes import router as file_router
 from routes.activity_routes import router as activity_router
+from routes.route_routes import router as route_router
 
 # Import utilities
 from utils.auth_utils import hash_password, verify_password
 from utils.storage_utils import init_storage
+
+# Import seed functions
+from seed_routes import seed_routes
 
 # Configure logging
 logging.basicConfig(
@@ -57,6 +61,7 @@ api_router.include_router(gallery_router)
 api_router.include_router(settings_router)
 api_router.include_router(file_router)
 api_router.include_router(activity_router)
+api_router.include_router(route_router)
 
 # Include API router in main app
 app.include_router(api_router)
@@ -239,6 +244,9 @@ async def startup_event():
         
         # Seed initial data
         await seed_initial_data()
+        
+        # Seed route data
+        await seed_routes(db)
         
         logger.info("Application startup completed")
     except Exception as e:
