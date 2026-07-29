@@ -269,7 +269,7 @@ const RouteFinder = () => {
 
         {/* Route List (when no search/selection) */}
         {!selectedRoute && !query && (
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto mt-12">
             <h4 className="text-xl font-bold text-gray-900 mb-6 text-center">Semua Rute Trans Koetaradja</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {routes.map((route) => (
