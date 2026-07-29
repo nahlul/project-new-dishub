@@ -87,15 +87,15 @@ const RouteFinder = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-b from-sky-50 to-white min-h-screen">
+    <section className="py-12 bg-gradient-to-b from-sky-50 to-white min-h-screen">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-10">
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-6">
+          <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
             Cari Rute & Jadwal
           </h2>
-          <div className="w-24 h-1 bg-sky-600 mx-auto mb-6" />
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <div className="w-16 h-1 bg-sky-600 mx-auto mb-3" />
+          <p className="text-sm text-gray-600 max-w-2xl mx-auto">
             Cari halte terdekat dan lihat jadwal bus Trans Koetaradja
           </p>
         </div>
@@ -111,7 +111,7 @@ const RouteFinder = () => {
               value={query}
               onChange={(e) => handleSearch(e.target.value)}
               placeholder="Ketik nama halte... (misal: Darussalam, Bandara, Ekonomi)"
-              className={`${query ? 'pl-4' : 'pl-12'} py-6 text-lg rounded-2xl border-2 border-gray-200 focus:border-sky-500 shadow-sm`}
+              className={`${query ? 'pl-4' : 'pl-12'} py-5 text-base rounded-2xl border-2 border-gray-200 focus:border-sky-500 shadow-sm`}
             />
           </div>
 
