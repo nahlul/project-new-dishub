@@ -26,7 +26,7 @@ async def get_all_routes(db: AsyncIOMotorDatabase = Depends(get_db)):
 async def search_halte(q: str = "", db: AsyncIOMotorDatabase = Depends(get_db)):
     """Search halte by name across all routes"""
     try:
-        if not q or len(q) < 2:
+        if not q or len(q) < 1:
             return []
         
         # Search in all routes for matching halte names

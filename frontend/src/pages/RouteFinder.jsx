@@ -35,7 +35,7 @@ const RouteFinder = () => {
   const handleSearch = async (value) => {
     setQuery(value);
     setSelectedRoute(null);
-    if (value.length < 2) {
+    if (value.length < 1) {
       setResults([]);
       return;
     }
@@ -103,18 +103,27 @@ const RouteFinder = () => {
         {/* Search Box */}
         <div className="max-w-2xl mx-auto mb-8">
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            {!query && (
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            )}
             <Input
               type="text"
               value={query}
               onChange={(e) => handleSearch(e.target.value)}
               placeholder="Ketik nama halte... (misal: Darussalam, Bandara, Ekonomi)"
-              className="pl-12 py-6 text-lg rounded-2xl border-2 border-gray-200 focus:border-sky-500 shadow-sm"
+              className={`${query ? 'pl-4' : 'pl-12'} py-6 text-lg rounded-2xl border-2 border-gray-200 focus:border-sky-500 shadow-sm`}
             />
-            <p className="text-xs text-gray-400 mt-2 text-center">Ketik minimal 2 huruf untuk mencari</p>
           </div>
 
           {/* Search Results Dropdown */}
+          {query.length >= 1 && results.length === 0 && !loading && (
+            <div className="mt-2 bg-white border-2 border-gray-100 rounded-xl shadow-lg p-6 text-center">
+              <Search className="w-8 h-8 text-gray-300 mx-auto mb-2" />
+              <p className="text-gray-500 text-sm">Rute tidak ditemukan</p>
+              <p className="text-gray-400 text-xs mt-1">Coba ketik nama halte yang lain</p>
+            </div>
+          )}
+
           {results.length > 0 && (
             <div className="mt-2 bg-white border-2 border-gray-100 rounded-xl shadow-lg max-h-80 overflow-y-auto">
               {results.map((item, idx) => {
