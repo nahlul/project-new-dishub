@@ -111,6 +111,7 @@ const RouteFinder = () => {
               placeholder="Ketik nama halte... (misal: Darussalam, Bandara, Ekonomi)"
               className="pl-12 py-6 text-lg rounded-2xl border-2 border-gray-200 focus:border-sky-500 shadow-sm"
             />
+            <p className="text-xs text-gray-400 mt-2 text-center">Ketik minimal 2 huruf untuk mencari</p>
           </div>
 
           {/* Search Results Dropdown */}
