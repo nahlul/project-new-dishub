@@ -87,10 +87,10 @@ const RouteFinder = () => {
   };
 
   return (
-    <section className="py-12 bg-gradient-to-b from-sky-50 to-white min-h-screen">
+    <section className="pt-24 pb-12 bg-gradient-to-b from-sky-50 to-white min-h-screen">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-8 pt-6">
+        <div className="text-center mb-8">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
             Cari Rute & Jadwal
           </h2>
