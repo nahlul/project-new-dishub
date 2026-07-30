@@ -59,6 +59,9 @@ const TripPlanner = ({ activeDay, dayLabels }) => {
       const ti = names.findIndex(n => n.includes(to.halte_nama.toLowerCase()));
       if (fi !== -1 && ti !== -1) {
         const h = route.halte[fi];
+        const start = Math.min(fi, ti);
+        const end = Math.max(fi, ti);
+        const stopsInBetween = route.halte.slice(start, end + 1).map(s => s.nama);
         results.push({
           route_nama: route.nama,
           route_warna: route.warna,
@@ -67,6 +70,7 @@ const TripPlanner = ({ activeDay, dayLabels }) => {
           jadwal: h.jadwal,
           nextBus: getNextBus(h.jadwal),
           jumlah_halte: Math.abs(ti - fi),
+          halte_dilewati: stopsInBetween,
         });
       }
     }
@@ -152,6 +156,23 @@ const TripPlanner = ({ activeDay, dayLabels }) => {
                       </div>
                     )}
                   </div>
+                  {/* Halte yang dilewati */}
+                  {trip.halte_dilewati && trip.halte_dilewati.length > 0 && (
+                    <div className="mb-3 bg-gray-50 rounded-lg p-3">
+                      <p className="text-xs font-medium text-gray-600 mb-2">Rute perjalanan:</p>
+                      <div className="flex flex-col gap-1">
+                        {trip.halte_dilewati.map((stop, i) => (
+                          <div key={i} className="flex items-center gap-2">
+                            <div className={`w-2.5 h-2.5 rounded-full ${i === 0 ? 'bg-green-500' : i === trip.halte_dilewati.length - 1 ? 'bg-red-500' : 'bg-sky-400'}`} />
+                            {i < trip.halte_dilewati.length - 1 && (
+                              <div className="absolute ml-[4px] mt-4 w-0.5 h-3 bg-gray-300" />
+                            )}
+                            <span className={`text-xs ${i === 0 || i === trip.halte_dilewati.length - 1 ? 'font-semibold text-gray-900' : 'text-gray-600'}`}>{stop}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   <div className="flex flex-wrap gap-1.5">
                     {times.map((time, i) => {
                       const [h, m] = time.split(':').map(Number);
