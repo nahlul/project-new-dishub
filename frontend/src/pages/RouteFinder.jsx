@@ -1,20 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { Search, MapPin, Clock, Bus, ArrowRight, Calendar } from 'lucide-react';
+import { Search, MapPin, Clock, Bus, ArrowRight, Calendar, Navigation, Route } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import api from '@/lib/api';
 
 const RouteFinder = () => {
+  const [activeTab, setActiveTab] = useState('jadwal');
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [routes, setRoutes] = useState([]);
+  const [allRouteDetails, setAllRouteDetails] = useState([]);
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [loading, setLoading] = useState(false);
   const [activeDay, setActiveDay] = useState('senin_kamis');
 
+  // Trip planner state
+  const [fromQuery, setFromQuery] = useState('');
+  const [toQuery, setToQuery] = useState('');
+  const [fromResults, setFromResults] = useState([]);
+  const [toResults, setToResults] = useState([]);
+  const [selectedFrom, setSelectedFrom] = useState(null);
+  const [selectedTo, setSelectedTo] = useState(null);
+  const [tripResults, setTripResults] = useState([]);
+
   useEffect(() => {
     fetchRoutes();
+    fetchAllRouteDetails();
     // Set active day based on current day
     const day = new Date().getDay();
     if (day === 5) setActiveDay('jumat');
@@ -30,6 +42,85 @@ const RouteFinder = () => {
     } catch (err) {
       console.error('Failed to fetch routes:', err);
     }
+  };
+
+  // Fetch all route details for trip planning
+  const fetchAllRouteDetails = async () => {
+    try {
+      const { data: routeList } = await api.get('/routes/', { withCredentials: false });
+      const details = [];
+      for (const r of routeList) {
+        try {
+          const { data } = await api.get(`/routes/${r.id}`, { withCredentials: false });
+          details.push(data);
+        } catch (e) {}
+      }
+      setAllRouteDetails(details);
+    } catch (err) {
+      console.error('Failed to fetch route details:', err);
+    }
+  };
+
+  // Search for trip planner
+  const handleFromSearch = async (value) => {
+    setFromQuery(value);
+    setSelectedFrom(null);
+    setTripResults([]);
+    if (value.length < 1) { setFromResults([]); return; }
+    try {
+      const { data } = await api.get(`/routes/search?q=${encodeURIComponent(value)}`, { withCredentials: false });
+      setFromResults(data);
+    } catch (err) {}
+  };
+
+  const handleToSearch = async (value) => {
+    setToQuery(value);
+    setSelectedTo(null);
+    setTripResults([]);
+    if (value.length < 1) { setToResults([]); return; }
+    try {
+      const { data } = await api.get(`/routes/search?q=${encodeURIComponent(value)}`, { withCredentials: false });
+      setToResults(data);
+    } catch (err) {}
+  };
+
+  const selectFrom = (item) => {
+    setSelectedFrom(item);
+    setFromQuery(item.halte_nama);
+    setFromResults([]);
+    if (selectedTo) findTrip(item, selectedTo);
+  };
+
+  const selectTo = (item) => {
+    setSelectedTo(item);
+    setToQuery(item.halte_nama);
+    setToResults([]);
+    if (selectedFrom) findTrip(selectedFrom, item);
+  };
+
+  // Find routes connecting from and to
+  const findTrip = (from, to) => {
+    const matching = [];
+    for (const route of allRouteDetails) {
+      const halteNames = (route.halte || []).map(h => h.nama.toLowerCase());
+      const fromIdx = halteNames.findIndex(n => n.includes(from.halte_nama.toLowerCase()));
+      const toIdx = halteNames.findIndex(n => n.includes(to.halte_nama.toLowerCase()));
+      if (fromIdx !== -1 && toIdx !== -1) {
+        const fromHalte = route.halte[fromIdx];
+        const nextBus = getNextBus(fromHalte.jadwal || {});
+        matching.push({
+          route_nama: route.nama,
+          route_warna: route.warna,
+          route_id: route.id,
+          from_halte: fromHalte.nama,
+          to_halte: route.halte[toIdx].nama,
+          jadwal: fromHalte.jadwal,
+          nextBus,
+          jumlah_halte: Math.abs(toIdx - fromIdx),
+        });
+      }
+    }
+    setTripResults(matching);
   };
 
   const handleSearch = async (value) => {
@@ -100,6 +191,28 @@ const RouteFinder = () => {
           </p>
         </div>
 
+        {/* Tab Switcher */}
+        <div className="max-w-md mx-auto mb-8 flex bg-white rounded-xl border-2 border-gray-200 overflow-hidden">
+          <button
+            onClick={() => { setActiveTab('jadwal'); setSelectedRoute(null); }}
+            className={`flex-1 py-3 px-4 text-sm font-medium flex items-center justify-center gap-2 transition-all ${
+              activeTab === 'jadwal' ? 'bg-sky-600 text-white' : 'text-gray-600 hover:bg-gray-50'
+            }`}
+          >
+            <Clock className="w-4 h-4" /> Cari Jadwal
+          </button>
+          <button
+            onClick={() => { setActiveTab('trip'); setSelectedRoute(null); setQuery(''); setResults([]); }}
+            className={`flex-1 py-3 px-4 text-sm font-medium flex items-center justify-center gap-2 transition-all ${
+              activeTab === 'trip' ? 'bg-sky-600 text-white' : 'text-gray-600 hover:bg-gray-50'
+            }`}
+          >
+            <Navigation className="w-4 h-4" /> Rencanakan Perjalanan
+          </button>
+        </div>
+
+        {/* === TAB 1: Cari Jadwal === */}
+        {activeTab === 'jadwal' && (<>
         {/* Search Box */}
         <div className="max-w-2xl mx-auto mb-8">
           <div className="relative">
