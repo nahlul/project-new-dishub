@@ -106,7 +106,7 @@ const AdminSocialMedia = () => {
                   type="url"
                   value={formData.instagram}
                   onChange={(e) => setFormData({ ...formData, instagram: e.target.value })}
-                  placeholder="https://www.instagram.com/dishubaceh"
+                  placeholder="https://www.instagram.com/trans.koetaradja"
                   required
                 />
               </div>
@@ -136,7 +136,7 @@ const AdminSocialMedia = () => {
                   type="url"
                   value={formData.twitter}
                   onChange={(e) => setFormData({ ...formData, twitter: e.target.value })}
-                  placeholder="https://twitter.com/dishubaceh"
+                  placeholder="https://x.com/dishub_aceh"
                   required
                 />
               </div>

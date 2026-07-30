@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import AdminLayout from '@/components/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Newspaper, Images, Calendar, TrendingUp, Plus, ArrowRight } from 'lucide-react';
+import { Newspaper, Images, Calendar, ArrowRight, Clock, Activity, Plus } from 'lucide-react';
 import { newsAPI, galleryAPI } from '@/lib/api';
 
 const AdminDashboard = () => {
@@ -188,31 +188,48 @@ const AdminDashboard = () => {
           </CardContent>
         </Card>
 
-        {/* Quick Actions */}
+        {/* Aktivitas Terakhir */}
         <Card>
           <CardHeader>
-            <CardTitle>Aksi Cepat</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <Activity className="w-5 h-5 text-sky-600" />
+              Informasi Sistem
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {[
-                { label: 'Kelola Berita', link: '/admin/news', icon: Newspaper, color: 'sky' },
-                { label: 'Kelola Galeri', link: '/admin/gallery', icon: Images, color: 'purple' },
-                { label: 'Edit Kontak', link: '/admin/contact', icon: TrendingUp, color: 'green' },
-                { label: 'Ganti Password', link: '/admin/change-password', icon: Plus, color: 'orange' },
-              ].map((action) => {
-                const Icon = action.icon;
-                return (
-                  <Link
-                    key={action.link}
-                    to={action.link}
-                    className={`p-4 rounded-lg border-2 border-${action.color}-200 hover:border-${action.color}-400 hover:bg-${action.color}-50 transition-all group`}
-                  >
-                    <Icon className={`w-8 h-8 text-${action.color}-600 mb-2 group-hover:scale-110 transition-transform`} />
-                    <p className="font-medium text-gray-900">{action.label}</p>
-                  </Link>
-                );
-              })}
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="flex items-start gap-3 p-4 rounded-lg bg-sky-50">
+                <Clock className="w-5 h-5 text-sky-600 mt-0.5" />
+                <div>
+                  <p className="text-sm font-medium text-gray-900">Berita Terakhir Ditambah</p>
+                  <p className="text-xs text-gray-600 mt-1">
+                    {stats.recentNews.length > 0
+                      ? stats.recentNews[0].date
+                      : 'Belum ada berita'}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-4 rounded-lg bg-green-50">
+                <Activity className="w-5 h-5 text-green-600 mt-0.5" />
+                <div>
+                  <p className="text-sm font-medium text-gray-900">Status Server</p>
+                  <p className="text-xs text-green-600 font-medium mt-1">Online & Berjalan Normal</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-4 rounded-lg bg-purple-50">
+                <Newspaper className="w-5 h-5 text-purple-600 mt-0.5" />
+                <div>
+                  <p className="text-sm font-medium text-gray-900">Total Konten</p>
+                  <p className="text-xs text-gray-600 mt-1">{stats.totalNews} Berita, {stats.totalGallery} Foto</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-4 rounded-lg bg-orange-50">
+                <Calendar className="w-5 h-5 text-orange-600 mt-0.5" />
+                <div>
+                  <p className="text-sm font-medium text-gray-900">Versi Aplikasi</p>
+                  <p className="text-xs text-gray-600 mt-1">Trans Koetaradja CMS v1.0</p>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>

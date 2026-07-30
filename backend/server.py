@@ -17,10 +17,15 @@ from routes.news_routes import router as news_router
 from routes.gallery_routes import router as gallery_router
 from routes.settings_routes import router as settings_router
 from routes.file_routes import router as file_router
+from routes.activity_routes import router as activity_router
+from routes.route_routes import router as route_router
 
 # Import utilities
 from utils.auth_utils import hash_password, verify_password
 from utils.storage_utils import init_storage
+
+# Import seed functions
+from seed_routes import seed_routes
 
 # Configure logging
 logging.basicConfig(
@@ -55,15 +60,22 @@ api_router.include_router(news_router)
 api_router.include_router(gallery_router)
 api_router.include_router(settings_router)
 api_router.include_router(file_router)
+api_router.include_router(activity_router)
+api_router.include_router(route_router)
 
 # Include API router in main app
 app.include_router(api_router)
 
 # CORS middleware
+# Read allowed origins from environment variable (comma-separated)
+# Defaults to localhost:3000 for development
+cors_origins_str = os.environ.get("CORS_ORIGINS", "http://localhost:3000")
+cors_origins = [origin.strip() for origin in cors_origins_str.split(",") if origin.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=False,  # Set to False when using wildcard origins
+    allow_origins=cors_origins,
+    allow_credentials=True,  # Required for httpOnly cookie authentication
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -190,9 +202,9 @@ async def seed_initial_data():
             social_doc = {
                 "id": "social_media",
                 "whatsapp": "https://wa.me/6281167123490",
-                "instagram": "https://www.instagram.com/dishubaceh",
+                "instagram": "https://www.instagram.com/trans.koetaradja",
                 "facebook": "https://www.facebook.com/dishub.aceh",
-                "twitter": "https://twitter.com/dishubaceh",
+                "twitter": "https://x.com/dishub_aceh",
                 "updated_at": datetime.now(timezone.utc).isoformat()
             }
             await db.social_media.insert_one(social_doc)
@@ -232,6 +244,9 @@ async def startup_event():
         
         # Seed initial data
         await seed_initial_data()
+        
+        # Seed route data
+        await seed_routes(db)
         
         logger.info("Application startup completed")
     except Exception as e:

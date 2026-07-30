@@ -3,6 +3,7 @@ import "@/App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import ScrollToTop from "@/components/ScrollToTop";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
@@ -10,10 +11,11 @@ import { Toaster } from "@/components/ui/sonner";
 // Public Pages
 import HomePage from "@/pages/HomePage";
 import AboutPage from "@/pages/AboutPage";
-import RoutesPage from "@/pages/RoutesPage";
+import RouteFinder from "@/pages/RouteFinder";
 import FacilitiesPage from "@/pages/FacilitiesPage";
 import GalleryPage from "@/pages/GalleryPage";
 import NewsPage from "@/pages/NewsPage";
+import NewsDetailPage from "@/pages/NewsDetailPage";
 import FAQPage from "@/pages/FAQPage";
 import DownloadPage from "@/pages/DownloadPage";
 import NotFoundPage from "@/pages/NotFoundPage";
@@ -33,6 +35,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <AuthProvider>
+          <ScrollToTop />
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={
@@ -52,7 +55,7 @@ function App() {
             <Route path="/rute" element={
               <>
                 <Header />
-                <main><RoutesPage /></main>
+                <main><RouteFinder /></main>
                 <Footer />
               </>
             } />
@@ -77,6 +80,7 @@ function App() {
                 <Footer />
               </>
             } />
+            <Route path="/berita/:id" element={<NewsDetailPage />} />
             <Route path="/faq" element={
               <>
                 <Header />

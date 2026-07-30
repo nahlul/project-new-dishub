@@ -55,7 +55,7 @@ const GallerySection = () => {
               className="relative group cursor-pointer overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
               onClick={() => setSelectedImage(item)}
             >
-              <div className="aspect-square w-full overflow-hidden bg-gray-100">
+              <div className="aspect-[4/3] w-full overflow-hidden bg-gray-100">
                 <img
                   src={item.image_url}
                   alt={item.title || 'Gallery'}
@@ -63,14 +63,17 @@ const GallerySection = () => {
                 />
               </div>
               {/* Caption outside image */}
-              {item.title && (
-                <div className="p-4 bg-white">
+              <div className="p-4 bg-white">
+                {item.title && (
                   <h3 className="text-sm font-semibold text-gray-900 line-clamp-2">{item.title}</h3>
-                  <span className="inline-block mt-2 px-2 py-1 text-xs bg-sky-100 text-sky-700 rounded">
-                    {item.category}
-                  </span>
-                </div>
-              )}
+                )}
+                <p className="text-xs text-sky-600 mt-1">
+                  {item.created_at ? new Date(item.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' }) : ''}
+                </p>
+                <span className="inline-block mt-2 px-2 py-1 text-xs bg-sky-100 text-sky-700 rounded">
+                  {item.category}
+                </span>
+              </div>
             </div>
             ))}
           </div>
@@ -78,14 +81,16 @@ const GallerySection = () => {
 
         {/* Image Modal */}
         <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
-          <DialogContent className="max-w-4xl">
+          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
             {selectedImage && (
               <div>
-                <img
-                  src={selectedImage.image_url}
-                  alt={selectedImage.title || 'Gallery'}
-                  className="w-full h-auto rounded-lg"
-                />
+                <div className="w-full max-h-[60vh] overflow-hidden rounded-lg bg-gray-100 flex items-center justify-center">
+                  <img
+                    src={selectedImage.image_url}
+                    alt={selectedImage.title || 'Gallery'}
+                    className="w-full h-full object-contain max-h-[60vh]"
+                  />
+                </div>
                 <div className="mt-4">
                   <Badge className="bg-sky-600 text-white mb-2">
                     {selectedImage.category}
@@ -93,6 +98,9 @@ const GallerySection = () => {
                   {selectedImage.title && (
                     <h3 className="text-2xl font-bold text-gray-900">{selectedImage.title}</h3>
                   )}
+                  <p className="text-sm text-sky-600 mt-1">
+                    {selectedImage.created_at ? new Date(selectedImage.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' }) : ''}
+                  </p>
                 </div>
               </div>
             )}

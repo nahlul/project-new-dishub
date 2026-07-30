@@ -48,22 +48,14 @@ const FAQSection = () => {
               Masih ada pertanyaan?
             </h3>
             <p className="text-gray-600 mb-6">
-              Tim kami siap membantu Anda. Hubungi kami melalui kontak yang tersedia di bagian footer.
+              Tim kami siap membantu Anda. Silakan kirim email ke alamat berikut.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a 
-                href="tel:+6265117551234"
-                className="inline-flex items-center justify-center bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 shadow-md hover:shadow-lg"
-              >
-                Hubungi Kami
-              </a>
-              <a 
-                href="mailto:info@transkutaraja.acehprov.go.id"
-                className="inline-flex items-center justify-center border-2 border-sky-600 text-sky-600 hover:bg-sky-50 px-6 py-3 rounded-lg font-semibold transition-all duration-200"
-              >
-                Kirim Email
-              </a>
-            </div>
+            <a 
+              href="mailto:info@transkutaraja.acehprov.go.id?subject=Pertanyaan tentang Trans Koetaradja"
+              className="inline-flex items-center justify-center bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 shadow-md hover:shadow-lg"
+            >
+              Kirim Email
+            </a>
           </div>
         </div>
       </div>

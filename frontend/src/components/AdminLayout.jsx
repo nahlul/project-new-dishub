@@ -68,10 +68,10 @@ const AdminLayout = ({ children }) => {
       </AnimatePresence>
 
       {/* Sidebar */}
-      <motion.aside
-        initial={false}
-        animate={{ x: sidebarOpen ? 0 : '-100%' }}
-        className="fixed top-0 left-0 h-full w-64 bg-white shadow-xl z-50 lg:translate-x-0 transition-transform duration-300"
+      <aside
+        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-xl z-50 transition-transform duration-300 ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } lg:translate-x-0`}
       >
         {/* Logo */}
         <div className="h-16 flex items-center justify-between px-6 border-b border-gray-200">
@@ -134,7 +134,7 @@ const AdminLayout = ({ children }) => {
             Keluar
           </Button>
         </div>
-      </motion.aside>
+      </aside>
 
       {/* Main Content */}
       <div className="lg:ml-64">
@@ -156,6 +156,15 @@ const AdminLayout = ({ children }) => {
               Lihat Website
               <ChevronRight className="w-4 h-4" />
             </Link>
+            <Button
+              onClick={() => setShowLogoutDialog(true)}
+              variant="outline"
+              size="sm"
+              className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Logout
+            </Button>
           </div>
         </header>
 

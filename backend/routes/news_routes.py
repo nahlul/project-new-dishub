@@ -8,6 +8,7 @@ import os
 from models.schemas import News, NewsCreate, NewsUpdate
 from utils.auth_utils import get_current_user
 from utils.storage_utils import upload_image, get_object
+from utils.activity_utils import log_activity
 
 logger = logging.getLogger(__name__)
 
@@ -72,6 +73,7 @@ async def create_news(
         await db.news.insert_one(news_dict)
         
         logger.info(f"News created: {news.title}")
+        await log_activity(db, f"Menambahkan berita: {news.title}")
         return news
         
     except HTTPException:
@@ -105,9 +107,9 @@ async def upload_news_image(
         image_data = await file.read()
         upload_result = upload_image(image_data, file.filename, folder="news")
         
-        # Generate public URL using frontend URL from env
-        frontend_url = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
-        image_url = f"{frontend_url}/api/files/{upload_result['storage_path']}"
+        # Generate public URL pointing to the BACKEND server (not frontend)
+        backend_url = os.environ.get('BACKEND_URL', 'http://localhost:8001')
+        image_url = f"{backend_url}/api/files/{upload_result['storage_path']}"
         
         # Update news with image info
         await db.news.update_one(
@@ -197,6 +199,7 @@ async def delete_news(
             raise HTTPException(status_code=400, detail="Failed to delete news")
         
         logger.info(f"News deleted: {news_id}")
+        await log_activity(db, f"Menghapus berita: {news['title']}")
         
         return {"message": "News deleted successfully"}
         
