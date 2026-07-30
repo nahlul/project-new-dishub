@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Search, MapPin, Clock, Bus, ArrowRight, Calendar, Navigation, Route } from 'lucide-react';
+import { Search, MapPin, Clock, Bus, ArrowRight, Calendar, Navigation } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import api from '@/lib/api';
+import TripPlanner from '@/components/TripPlanner';
 
 const RouteFinder = () => {
   const [activeTab, setActiveTab] = useState('jadwal');
@@ -406,6 +407,12 @@ const RouteFinder = () => {
               ))}
             </div>
           </div>
+        )}
+        </>)}
+
+        {/* === TAB 2: Rencanakan Perjalanan === */}
+        {activeTab === 'trip' && (
+          <TripPlanner activeDay={activeDay} dayLabels={dayLabels} />
         )}
       </div>
     </section>
