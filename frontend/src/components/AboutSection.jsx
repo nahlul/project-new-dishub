@@ -125,7 +125,7 @@ const AboutSection = () => {
               </h3>
               <div className="w-20 h-1 bg-sky-600 mx-auto mb-6" />
               <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Perjalanan panjang dari tahun 2016 hingga menjadi transportasi publik andalan masyarakat Aceh
+                Perjalanan panjang dari tahun 2016 hingga 2026 menjadi transportasi publik andalan masyarakat Aceh
               </p>
             </div>
 
@@ -220,6 +220,23 @@ const AboutSection = () => {
                   </div>
                   <div className="hidden lg:block"></div>
                 </div>
+
+                {/* 2026 */}
+                <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                  <div className="hidden lg:block"></div>
+                  <div>
+                    <div className="inline-block bg-gradient-to-br from-sky-50 to-blue-50 border-2 border-sky-400 p-6 rounded-2xl shadow-xl">
+                      <div className="flex items-center space-x-3 mb-3">
+                        <TrendingUp className="w-6 h-6 text-sky-600" />
+                        <h4 className="text-2xl font-bold text-sky-600">2026</h4>
+                      </div>
+                      <h5 className="font-bold text-lg text-gray-900 mb-2">Transformasi Digital & Layanan Terintegrasi</h5>
+                      <p className="text-gray-600">
+                        Memasuki tahun ke-10, Trans Koetaradja menghadirkan <strong>platform digital resmi</strong> dengan pelacakan bus <strong>real-time</strong>, informasi rute dan jadwal daring, serta peta halte interaktif. Layanan tetap <strong>100% gratis</strong> dengan komitmen peningkatan armada ramah lingkungan dan perluasan jangkauan di Banda Aceh dan Aceh Besar.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -228,7 +245,7 @@ const AboutSection = () => {
               <h4 className="text-2xl font-bold mb-4 text-center">Pencapaian Trans Koetaradja</h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
                 <div>
-                  <div className="text-4xl font-bold mb-2">9+ Tahun</div>
+                  <div className="text-4xl font-bold mb-2">10 Tahun</div>
                   <div className="text-sky-100">Mengabdi untuk Masyarakat</div>
                 </div>
                 <div>

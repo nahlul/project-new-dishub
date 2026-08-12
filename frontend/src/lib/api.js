@@ -94,4 +94,36 @@ export const settingsAPI = {
   updateAbout: (content) => api.put('/settings/about', { content }),
 };
 
+// Routes / Halte API (public)
+export const routesAPI = {
+  getAll: () => api.get('/routes/', { withCredentials: false }),
+
+  getById: (id) => api.get(`/routes/${id}`, { withCredentials: false }),
+
+  search: (q) =>
+    api.get(`/routes/search?q=${encodeURIComponent(q)}`, { withCredentials: false }),
+
+  getAllHaltes: () => api.get('/routes/haltes', { withCredentials: false }),
+
+  nearest: (lat, lng, limit = 5) =>
+    api.get(`/routes/nearest?lat=${lat}&lng=${lng}&limit=${limit}`, {
+      withCredentials: false,
+    }),
+
+  geocode: (q) =>
+    api.get(`/routes/geocode?q=${encodeURIComponent(q)}`, { withCredentials: false }),
+
+  plan: ({ fromLat, fromLng, toLat, toLng, day, departAfter }) => {
+    const params = new URLSearchParams({
+      from_lat: fromLat,
+      from_lng: fromLng,
+      to_lat: toLat,
+      to_lng: toLng,
+      day: day || 'senin_kamis',
+    });
+    if (departAfter) params.set('depart_after', departAfter);
+    return api.get(`/routes/plan?${params.toString()}`, { withCredentials: false });
+  },
+};
+
 export default api;
